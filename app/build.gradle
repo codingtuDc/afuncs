@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = 'cn.yuanye1818.autils.demo'
 
 android {
     compileSdkVersion 28
