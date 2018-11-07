@@ -3,6 +3,7 @@
     package="cn.yuanye1818.autils">
 
     <application
+        android:name="global.APP"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
