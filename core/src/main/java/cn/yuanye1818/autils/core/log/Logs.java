@@ -16,16 +16,30 @@ public class Logs {
     public static final int LEVEL_WARNING = 1;
     public static final int LEVEL_ERROR = 2;
 
+    public static void line(String... msgs) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" \n");
+        sb.append(
+                "┌───────────────────────────────────────────────────────────────────────────────────────\n");
+
+        for (int i = 0; i < msgs.length; i++) {
+            sb.append("│ " + msgs[i] + "\n");
+        }
+        sb.append(
+                "└───────────────────────────────────────────────────────────────────────────────────────\n");
+        i(sb.toString());
+    }
+
     public static void i(Object msg) {
-        log(LEVEL_INFO, App.APP.defaultLogTag(), msg);
+        log(LEVEL_INFO, App.APP.defaultLogTag() + "_I", msg);
     }
 
     public static void e(Object msg) {
-        log(LEVEL_ERROR, App.APP.defaultLogTag(), msg);
+        log(LEVEL_ERROR, App.APP.defaultLogTag() + "_E", msg);
     }
 
     public static void w(Object msg) {
-        log(LEVEL_WARNING, App.APP.defaultLogTag(), msg);
+        log(LEVEL_WARNING, App.APP.defaultLogTag() + "_W", msg);
     }
 
     public static void i(String tag, Object msg) {
@@ -71,49 +85,66 @@ public class Logs {
     }
 
     private static void logThrowable(int level, String tag, Throwable t) {
-        baseLog(level, tag, " ");
-        baseLog(level, tag, "=Throwable================================================");
-        baseLog(level, tag, "----------------------------------------------------------");
-        baseLog(level, tag, t);
-        baseLog(level, tag, "----------------------------------------------------------");
-        baseLog(level, tag, "==========================================================");
-        baseLog(level, tag, " ");
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(
+                "  \n┌──Throwable────────────────────────────────────────────────────────────────────────────\n");
+        sb.append("│ " + t.getClass().getName() + ": " + t.getMessage() + "\n");
+        StackTraceElement[] stackTrace = t.getStackTrace();
+        for (StackTraceElement ste : stackTrace) {
+            sb.append("│\tat " + ste + "\n");
+        }
+        Throwable cause = t.getCause();
+        if (cause != null) {
+            sb.append("│ Caused by: " + cause.getMessage() + "\n");
+            StackTraceElement[] stackTrace1 = cause.getStackTrace();
+            for (StackTraceElement ste : stackTrace1) {
+                sb.append("│\tat " + ste + "\n");
+            }
+        }
+        sb.append(
+                "└───────────────────────────────────────────────────────────────────────────────────────\n");
+        baseLog(level, tag, sb.toString());
     }
 
     private static void logCollection(int level, String tag, Collection cs) {
-        baseLog(level, tag, " ");
-        baseLog(level, tag, "=Collection===============================================");
-        baseLog(level, tag, "----------------------------------------------------------");
+        StringBuilder sb = new StringBuilder();
+        sb.append(" \n");
+        sb.append(
+                "┌──Collection───────────────────────────────────────────────────────────────────────────\n");
+
+
         if (cs.size() <= 0) {
-            baseLog(level, tag, "Collection is empty");
+            sb.append("│\tCollection is empty\n");
         } else {
             Iterator iterator = cs.iterator();
             int index = 0;
             while (iterator.hasNext()) {
                 Object next = iterator.next();
-                baseLog(level, tag, "index:" + index + " | " + next);
+                sb.append("│\tindex:" + index + " | " + next + "\n");
                 index++;
             }
         }
-        baseLog(level, tag, "----------------------------------------------------------");
-        baseLog(level, tag, "==========================================================");
-        baseLog(level, tag, " ");
+        sb.append(
+                "└───────────────────────────────────────────────────────────────────────────────────────\n");
+        baseLog(level, tag, sb.toString());
     }
 
     private static void logArray(int level, String tag, Object[] objs) {
-        baseLog(level, tag, " ");
-        baseLog(level, tag, "=Array====================================================");
-        baseLog(level, tag, "----------------------------------------------------------");
+        StringBuilder sb = new StringBuilder();
+        sb.append(" \n");
+        sb.append(
+                "┌──Array────────────────────────────────────────────────────────────────────────────────\n");
         if (objs.length <= 0) {
-            baseLog(level, tag, "Array is empty");
+            sb.append("│\tArray is empty");
         } else {
             for (int i = 0; i < objs.length; i++) {
-                baseLog(level, tag, "index:" + i + " | " + objs[i]);
+                sb.append("│\tindex:" + i + " | " + objs[i] + "\n");
             }
         }
-        baseLog(level, tag, "----------------------------------------------------------");
-        baseLog(level, tag, "==========================================================");
-        baseLog(level, tag, " ");
+        sb.append(
+                "└───────────────────────────────────────────────────────────────────────────────────────\n");
+        baseLog(level, tag, sb.toString());
     }
 
     private static void baseLog(int level, String tag, String msg) {
@@ -126,20 +157,6 @@ public class Logs {
                 break;
             case LEVEL_ERROR:
                 Log.e(tag, msg);
-                break;
-        }
-    }
-
-    private static void baseLog(int level, String tag, Throwable msg) {
-        switch (level) {
-            case LEVEL_INFO:
-                Log.i(tag, msg.getMessage(), msg);
-                break;
-            case LEVEL_WARNING:
-                Log.w(tag, msg.getMessage(), msg);
-                break;
-            case LEVEL_ERROR:
-                Log.e(tag, msg.getMessage(), msg);
                 break;
         }
     }

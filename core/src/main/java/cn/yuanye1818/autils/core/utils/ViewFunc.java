@@ -1,6 +1,7 @@
 package cn.yuanye1818.autils.core.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -125,14 +126,14 @@ public class ViewFunc {
 
     public static void inputHidden(EditText et) {
         if (et != null) {
-            InputMethodManager imm = SystemServiceFunc.getInputMethodManager();
+            InputMethodManager imm = SystemFunc.getInputMethodManager();
             imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
         }
     }
 
     public static void inputShow(EditText et) {
         if (et != null) {
-            InputMethodManager imm = SystemServiceFunc.getInputMethodManager();
+            InputMethodManager imm = SystemFunc.getInputMethodManager();
             imm.showSoftInput(et, InputMethodManager.SHOW_FORCED);
         }
     }
@@ -224,11 +225,5 @@ public class ViewFunc {
     public static void removeView(View view) {
         ((ViewGroup) view.getParent()).removeView(view);
     }
-
-    //    public static RelativeLayout.LayoutParams getRelativeLayoutParamesWithWrapWithCenterInParent() {
-    //        RelativeLayout.LayoutParams rlp = getRelativeLayoutParamesWithWrap();
-    //        rlp.addRule(RelativeLayout.CENTER_IN_PARENT);
-    //        return rlp;
-    //    }
 
 }

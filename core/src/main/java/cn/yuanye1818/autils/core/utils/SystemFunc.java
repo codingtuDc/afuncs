@@ -11,7 +11,7 @@ import cn.yuanye1818.autils.global.App;
  * 获取系统的服务
  */
 
-public class SystemServiceFunc {
+public class SystemFunc {
 
     private static Context getContext() {
         return App.APP;

@@ -64,7 +64,7 @@ public class MobileFunc {
 
     public static DisplayMetrics getDisplayMetrics() {
         DisplayMetrics metric = new DisplayMetrics();
-        SystemServiceFunc.getWindowManager().getDefaultDisplay().getMetrics(metric);
+        SystemFunc.getWindowManager().getDefaultDisplay().getMetrics(metric);
         return metric;
     }
 

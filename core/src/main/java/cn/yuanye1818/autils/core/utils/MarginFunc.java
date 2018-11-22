@@ -4,10 +4,31 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cn.yuanye1818.autils.core.bean.LTRB;
+
+/**************************************************
+ *
+ * view的margin的操作
+ *
+ **************************************************/
 public class MarginFunc {
 
+    //获取LayoutParam
     private static ViewGroup.MarginLayoutParams lp(View v) {
         return (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+    }
+
+    //获取margin
+    public static LTRB ltrb(View v) {
+        LTRB ltrb = new LTRB();
+        if (v != null) {
+            ViewGroup.MarginLayoutParams lp = lp(v);
+            ltrb.l = lp.leftMargin;
+            ltrb.t = lp.topMargin;
+            ltrb.r = lp.rightMargin;
+            ltrb.b = lp.bottomMargin;
+        }
+        return ltrb;
     }
 
     public static int l(View v) {
@@ -34,6 +55,7 @@ public class MarginFunc {
         return lp(v).bottomMargin;
     }
 
+    //设置margin,单位px
     public static void l(View v, int l) {
         if (v == null)
             return;
@@ -170,5 +192,144 @@ public class MarginFunc {
         lp.bottomMargin = b;
         v.setLayoutParams(lp);
     }
+
+    //设置margin，单位dp
+    public static void l_dp(View v, int l) {
+        if (v == null)
+            return;
+        ViewGroup.MarginLayoutParams lp = lp(v);
+        lp.leftMargin = MobileFunc.dpToPx(l);
+        v.setLayoutParams(lp);
+    }
+
+    public static void lt_dp(View v, int l, int t) {
+        if (v == null)
+            return;
+        ViewGroup.MarginLayoutParams lp = lp(v);
+        lp.leftMargin = MobileFunc.dpToPx(l);
+        lp.topMargin = MobileFunc.dpToPx(t);
+        v.setLayoutParams(lp);
+    }
+
+    public static void ltr_dp(View v, int l, int t, int r) {
+        if (v == null)
+            return;
+        ViewGroup.MarginLayoutParams lp = lp(v);
+        lp.leftMargin = MobileFunc.dpToPx(l);
+        lp.topMargin = MobileFunc.dpToPx(t);
+        lp.rightMargin = MobileFunc.dpToPx(r);
+        v.setLayoutParams(lp);
+    }
+
+    public static void ltrb_dp(View v, int l, int t, int r, int b) {
+        if (v == null)
+            return;
+        ViewGroup.MarginLayoutParams lp = lp(v);
+        lp.leftMargin = MobileFunc.dpToPx(l);
+        lp.topMargin = MobileFunc.dpToPx(t);
+        lp.rightMargin = MobileFunc.dpToPx(r);
+        lp.bottomMargin = MobileFunc.dpToPx(b);
+        v.setLayoutParams(lp);
+    }
+
+    public static void ltb_dp(View v, int l, int t, int b) {
+        if (v == null)
+            return;
+        ViewGroup.MarginLayoutParams lp = lp(v);
+        lp.leftMargin = MobileFunc.dpToPx(l);
+        lp.topMargin = MobileFunc.dpToPx(t);
+        lp.bottomMargin = MobileFunc.dpToPx(b);
+        v.setLayoutParams(lp);
+    }
+
+    public static void lr_dp(View v, int l, int r) {
+        if (v == null)
+            return;
+        ViewGroup.MarginLayoutParams lp = lp(v);
+        lp.leftMargin = MobileFunc.dpToPx(l);
+        lp.rightMargin = MobileFunc.dpToPx(r);
+        v.setLayoutParams(lp);
+    }
+
+    public static void lrb_dp(View v, int l, int r, int b) {
+        if (v == null)
+            return;
+        ViewGroup.MarginLayoutParams lp = lp(v);
+        lp.leftMargin = MobileFunc.dpToPx(l);
+        lp.rightMargin = MobileFunc.dpToPx(r);
+        lp.bottomMargin = MobileFunc.dpToPx(b);
+        v.setLayoutParams(lp);
+    }
+
+    public static void lb_dp(View v, int l, int b) {
+        if (v == null)
+            return;
+        ViewGroup.MarginLayoutParams lp = lp(v);
+        lp.leftMargin = MobileFunc.dpToPx(l);
+        lp.bottomMargin = MobileFunc.dpToPx(b);
+        v.setLayoutParams(lp);
+    }
+
+    public static void t_dp(View v, int t) {
+        if (v == null)
+            return;
+        ViewGroup.MarginLayoutParams lp = lp(v);
+        lp.topMargin = MobileFunc.dpToPx(t);
+        v.setLayoutParams(lp);
+    }
+
+    public static void tr_dp(View v, int t, int r) {
+        if (v == null)
+            return;
+        ViewGroup.MarginLayoutParams lp = lp(v);
+        lp.topMargin = MobileFunc.dpToPx(t);
+        lp.rightMargin = MobileFunc.dpToPx(r);
+        v.setLayoutParams(lp);
+    }
+
+    public static void trb_dp(View v, int t, int r, int b) {
+        if (v == null)
+            return;
+        ViewGroup.MarginLayoutParams lp = lp(v);
+        lp.topMargin = MobileFunc.dpToPx(t);
+        lp.rightMargin = MobileFunc.dpToPx(r);
+        lp.bottomMargin = MobileFunc.dpToPx(b);
+        v.setLayoutParams(lp);
+    }
+
+    public static void tb_dp(View v, int t, int b) {
+        if (v == null)
+            return;
+        ViewGroup.MarginLayoutParams lp = lp(v);
+        lp.topMargin = MobileFunc.dpToPx(t);
+        lp.bottomMargin = MobileFunc.dpToPx(b);
+        v.setLayoutParams(lp);
+    }
+
+    public static void r_dp(View v, int r) {
+        if (v == null)
+            return;
+        ViewGroup.MarginLayoutParams lp = lp(v);
+        lp.rightMargin = MobileFunc.dpToPx(r);
+        v.setLayoutParams(lp);
+    }
+
+    public static void rb_dp(View v, int r, int b) {
+        if (v == null)
+            return;
+        ViewGroup.MarginLayoutParams lp = lp(v);
+        lp.rightMargin = MobileFunc.dpToPx(r);
+        lp.bottomMargin = MobileFunc.dpToPx(b);
+        v.setLayoutParams(lp);
+    }
+
+    public static void b_dp(View v, int b) {
+        if (v == null)
+            return;
+        ViewGroup.MarginLayoutParams lp = lp(v);
+        lp.bottomMargin = MobileFunc.dpToPx(b);
+        v.setLayoutParams(lp);
+    }
+
 
 }

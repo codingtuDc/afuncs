@@ -10,6 +10,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/net_utils" />
+            <option value="$PROJECT_DIR$/net_utils_annotation" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

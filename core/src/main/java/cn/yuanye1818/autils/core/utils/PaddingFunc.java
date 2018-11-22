@@ -2,14 +2,20 @@ package cn.yuanye1818.autils.core.utils;
 
 import android.view.View;
 
+/**************************************************
+ *
+ * View的Padding操作
+ *
+ **************************************************/
 public class PaddingFunc {
+
+    //获取padding
 
     public static int l(View v) {
         if (v == null)
             return -1;
         return v.getPaddingLeft();
     }
-
     public static int t(View v) {
         if (v == null)
             return -1;
@@ -28,12 +34,18 @@ public class PaddingFunc {
         return v.getPaddingBottom();
     }
 
-    protected static void p(View v, int l, int t, int r, int b) {
+    //设置padding基础方法
+    private static void p(View v, int l, int t, int r, int b) {
         if (v == null)
             return;
         v.setPadding(l, t, r, b);
     }
 
+    private static int px(int dp) {
+        return MobileFunc.dpToPx(dp);
+    }
+
+    //设置padding，单位px
     public static void l(View v, int l) {
         p(v, l, t(v), r(v), b(v));
     }
@@ -92,6 +104,68 @@ public class PaddingFunc {
 
     public static void b(View v, int b) {
         p(v, l(v), t(v), r(v), b);
+    }
+
+    //设置padding，单位dp
+
+    public static void l_dp(View v, int l) {
+        p(v, px(l), t(v), r(v), b(v));
+    }
+
+    public static void lt_dp(View v, int l, int t) {
+        p(v, px(l), px(t), r(v), b(v));
+    }
+
+    public static void ltr_dp(View v, int l, int t, int r) {
+        p(v, px(l), px(t), px(r), b(v));
+    }
+
+    public static void ltrb_dp(View v, int l, int t, int r, int b) {
+        p(v, px(l), px(t), px(r), px(b));
+    }
+
+    public static void ltb_dp(View v, int l, int t, int b) {
+        p(v, px(l), px(t), r(v), px(b));
+    }
+
+    public static void lr_dp(View v, int l, int r) {
+        p(v, px(l), t(v), px(r), b(v));
+    }
+
+    public static void lrb_dp(View v, int l, int r, int b) {
+        p(v, px(l), t(v), px(r), px(b));
+    }
+
+    public static void lb_dp(View v, int l, int b) {
+        p(v, px(l), t(v), r(v), px(b));
+    }
+
+    public static void t_dp(View v, int t) {
+        p(v, l(v), px(t), r(v), b(v));
+    }
+
+    public static void tr_dp(View v, int t, int r) {
+        p(v, l(v), px(t), px(r), b(v));
+    }
+
+    public static void trb_dp(View v, int t, int r, int b) {
+        p(v, l(v), px(t), px(r), px(b));
+    }
+
+    public static void tb_dp(View v, int t, int b) {
+        p(v, l(v), px(t), r(v), px(b));
+    }
+
+    public static void r_dp(View v, int r) {
+        p(v, l(v), t(v), px(r), b(v));
+    }
+
+    public static void rb_dp(View v, int r, int b) {
+        p(v, l(v), t(v), px(r), px(b));
+    }
+
+    public static void b_dp(View v, int b) {
+        p(v, l(v), t(v), r(v), px(b));
     }
 
 }

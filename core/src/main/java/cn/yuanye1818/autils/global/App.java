@@ -2,6 +2,7 @@ package cn.yuanye1818.autils.global;
 
 import android.app.Application;
 
+import cn.yuanye1818.autils.core.json.jsonholder.JsonHolder;
 import cn.yuanye1818.autils.core.log.Logs;
 
 /*************************************************
@@ -35,4 +36,8 @@ public abstract class App extends Application implements Thread.UncaughtExceptio
     public abstract String defaultLogTag();
 
     public abstract boolean isLog();
+
+    public abstract JsonHolder createJsonHolder();
+
+    public abstract String getBaseUrl();
 }
