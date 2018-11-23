@@ -11,7 +11,7 @@ import cn.yuanye1818.autils.core.bean.LTRB;
  * view的margin的操作
  *
  **************************************************/
-public class MarginFunc {
+public class Margins {
 
     //获取LayoutParam
     private static ViewGroup.MarginLayoutParams lp(View v) {

@@ -7,7 +7,7 @@ import android.view.View;
  * View的Padding操作
  *
  **************************************************/
-public class PaddingFunc {
+public class Paddings {
 
     //获取padding
 

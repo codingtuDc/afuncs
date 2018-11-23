@@ -8,4 +8,8 @@ public class CollectionFunc {
         return cs == null ? 0 : cs.size();
     }
 
+    public static int count(Object... objs) {
+        return objs == null ? 0 : objs.length;
+    }
+
 }

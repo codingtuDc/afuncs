@@ -155,9 +155,9 @@ public class BaseInterceptor implements Interceptor {
             httpLog.addResponseHeader(name + ": " + value);
 
 
-//                        if ("set-cookie".equalsIgnoreCase(name)) {
-//                            cookieDb.cacheCookie(url, value);
-//                        }
+            //                        if ("set-cookie".equalsIgnoreCase(name)) {
+            //                            cookieDb.cacheCookie(url, value);
+            //                        }
 
         }
 

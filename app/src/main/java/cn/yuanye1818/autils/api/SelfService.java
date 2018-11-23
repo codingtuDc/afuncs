@@ -10,7 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 @Api
-@BaseUrl("https://bookgood.wismoly.com/app/api/v2/")
+@BaseUrl("https://bookgood.wismoly.com/app/api/v1/")
 public interface SelfService {
 
     @GET("albums/{id}")

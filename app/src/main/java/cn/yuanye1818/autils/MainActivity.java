@@ -2,12 +2,13 @@ package cn.yuanye1818.autils;
 
 import android.os.Bundle;
 
-import com.yuanye1818.autils.net.Net;
-
-import cn.yuanye1818.autils.core.CoreActivity;
+import cn.yuanye1818.autils.core.activity.CoreActivity;
 import cn.yuanye1818.autils.core.log.Logs;
-import cn.yuanye1818.autils.core.net.NetHelpers;
+import cn.yuanye1818.autils.core.utils.MD5;
+import cn.yuanye1818.autils.net.Net;
+import cn.yuanye1818.autils.net_utils_annotation.BackType;
 import cn.yuanye1818.autils.net_utils_annotation.NetBack;
+import cn.yuanye1818.autils.test.BeanBack;
 
 public class MainActivity extends CoreActivity {
 
@@ -15,13 +16,16 @@ public class MainActivity extends CoreActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        NetHelpers.bind(this);
-        Net.getAlbumDetail("2005").run(this);
+        Net.selfDetailTwo("2005").main(net);
+
+        String xxx = MD5.md5("XXX");
+        Logs.line(xxx);
+
     }
 
-    @NetBack(code = Net.GET_ALBUM_DETAIL)
-    public void userBack(int code, String msg, User user) {
-        Logs.i("userBack");
+    @NetBack(BeanBack.class)
+    public void selfDetailTwo(String messsage, @BackType User user) {
+        Logs.line(user.toString());
     }
 
 }

@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.Collection;
 import java.util.Iterator;
 
+import cn.yuanye1818.autils.core.utils.CollectionFunc;
 import cn.yuanye1818.autils.core.utils.StringFunc;
 import cn.yuanye1818.autils.global.App;
 
@@ -16,13 +17,13 @@ public class Logs {
     public static final int LEVEL_WARNING = 1;
     public static final int LEVEL_ERROR = 2;
 
-    public static void line(String... msgs) {
+    public static void line(Object... msgs) {
         StringBuilder sb = new StringBuilder();
         sb.append(" \n");
         sb.append(
                 "┌───────────────────────────────────────────────────────────────────────────────────────\n");
 
-        for (int i = 0; i < msgs.length; i++) {
+        for (int i = 0; i < CollectionFunc.count(msgs); i++) {
             sb.append("│ " + msgs[i] + "\n");
         }
         sb.append(
