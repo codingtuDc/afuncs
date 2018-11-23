@@ -4,11 +4,13 @@ import android.os.Bundle;
 
 import cn.yuanye1818.autils.core.activity.CoreActivity;
 import cn.yuanye1818.autils.core.log.Logs;
+import cn.yuanye1818.autils.core.net.Net;
 import cn.yuanye1818.autils.core.utils.MD5;
-import cn.yuanye1818.autils.net.Net;
-import cn.yuanye1818.autils.net_utils_annotation.BackType;
-import cn.yuanye1818.autils.net_utils_annotation.NetBack;
+import cn.yuanye1818.autils.compiler.annotation.BackType;
+import cn.yuanye1818.autils.compiler.annotation.NetBack;
 import cn.yuanye1818.autils.test.BeanBack;
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 
 public class MainActivity extends CoreActivity {
 
@@ -16,10 +18,17 @@ public class MainActivity extends CoreActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Net.selfDetailTwo("2005").main(net);
 
         String xxx = MD5.md5("XXX");
         Logs.line(xxx);
+
+        Net.getAlbumDetail("2005").main(net);
+
+
+    }
+
+    @NetBack
+    public void getAlbumDetail(Throwable error, Response<ResponseBody> response) {
 
     }
 

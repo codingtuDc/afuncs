@@ -1,10 +1,9 @@
-package cn.yuanye1818.autils.net_utils;
+package cn.yuanye1818.autils.compiler;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
-import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
@@ -22,10 +21,14 @@ import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.type.TypeMirror;
 
-import cn.yuanye1818.autils.net_utils_annotation.BackType;
-import cn.yuanye1818.autils.net_utils_annotation.NetBack;
+import cn.yuanye1818.autils.compiler.annotation.BackType;
+import cn.yuanye1818.autils.compiler.annotation.NetBack;
 
 public class NetMaker02ForHelper extends MyProcessor {
+
+    public static final String CLASS_NET_BACK_I = "cn.yuanye1818.autils.core.net.NetBackI";
+    public static final String CLASS_RXJAVA2_RESULT = "retrofit2.adapter.rxjava2.Result";
+    public static final String CLASS_RESPONSE_BODY = "okhttp3.ResponseBody";
 
     private HashMap<String, ClassObject> classObjects = new HashMap<String, ClassObject>();
     private HashMap<String, HashMap<String, List<CodeObject>>> sbs = new HashMap<String, HashMap<String, List<CodeObject>>>();
@@ -33,11 +36,7 @@ public class NetMaker02ForHelper extends MyProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
-
-
         dealNetBack(roundEnvironment);
-
-
         return true;
     }
 
@@ -230,8 +229,7 @@ public class NetMaker02ForHelper extends MyProcessor {
                 typeBuilder.addModifiers(Modifier.PUBLIC, Modifier.FINAL);
 
 
-                ClassName netHelperClass = ClassName
-                        .bestGuess("cn.yuanye1818.autils.core.net.NetBackI");
+                ClassName netHelperClass = ClassName.bestGuess(CLASS_NET_BACK_I);
 
                 typeBuilder.addSuperinterface(netHelperClass);
 
@@ -248,8 +246,8 @@ public class NetMaker02ForHelper extends MyProcessor {
                 methodBuilder.addAnnotation(Override.class);
                 methodBuilder.addParameter(String.class, "code");
 
-                ClassName resultClass = ClassName.bestGuess("retrofit2.adapter.rxjava2.Result");
-                ClassName responseBodyClass = ClassName.bestGuess("okhttp3.ResponseBody");
+                ClassName resultClass = ClassName.bestGuess(CLASS_RXJAVA2_RESULT);
+                ClassName responseBodyClass = ClassName.bestGuess(CLASS_RESPONSE_BODY);
 
                 methodBuilder
                         .addParameter(ParameterizedTypeName.get(resultClass, responseBodyClass),

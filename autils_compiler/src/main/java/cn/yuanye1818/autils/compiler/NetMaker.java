@@ -1,17 +1,7 @@
-package cn.yuanye1818.autils.net_utils;
+package cn.yuanye1818.autils.compiler;
 
 import com.google.auto.service.AutoService;
-import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.TypeName;
-import com.squareup.javapoet.TypeSpec;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 
 import javax.annotation.processing.ProcessingEnvironment;
@@ -20,21 +10,15 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.VariableElement;
-import javax.lang.model.type.TypeMirror;
-
-import cn.yuanye1818.autils.net_utils_annotation.Api;
-import cn.yuanye1818.autils.net_utils_annotation.BaseUrl;
 
 @AutoService(Processor.class)
 @SupportedSourceVersion(SourceVersion.RELEASE_7)
-@SupportedAnnotationTypes({"cn.yuanye1818.autils.net_utils_annotation.Api",
-        "cn.yuanye1818.autils.net_utils_annotation.NetBack"})
+@SupportedAnnotationTypes({NetMaker.CLASS_API, NetMaker.CLASS_NET_BACK})
 public class NetMaker extends MyProcessor {
+
+    public static final String CLASS_API = "cn.yuanye1818.autils.compiler.annotation.Api";
+    public static final String CLASS_NET_BACK = "cn.yuanye1818.autils.compiler.annotation.NetBack";
 
     private NetMaker01ForNet netMaker01ForNet;
     private NetMaker02ForHelper netMaker02ForHelper;
