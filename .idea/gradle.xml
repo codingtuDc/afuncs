@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/autils_compiler" />
             <option value="$PROJECT_DIR$/autils_compiler_annotation" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/demo" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

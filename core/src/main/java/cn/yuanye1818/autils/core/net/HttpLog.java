@@ -12,6 +12,7 @@ import java.util.List;
 import cn.yuanye1818.autils.core.log.Logs;
 import cn.yuanye1818.autils.core.utils.StringFunc;
 import cn.yuanye1818.autils.global.App;
+import cn.yuanye1818.autils.global.AutilsConfigs;
 
 /**
  * Created by cute on 2017/12/14.
@@ -114,7 +115,7 @@ public class HttpLog {
     }
 
     public void log() {
-        if (!App.APP.isLog()) {
+        if (!AutilsConfigs.configs().isLog()) {
             return;
         }
 
@@ -165,7 +166,7 @@ public class HttpLog {
         if (isFailed) {
             sb.append("│\t<-- 请求失败\n");
             if (failedThrowable != null) {
-                Logs.w(App.APP.defaultLogTag() + "_API", failedThrowable);
+                Logs.w(AutilsConfigs.configs().defaultLogTag() + "_API", failedThrowable);
             }
         } else {
             sb.append(
@@ -189,7 +190,7 @@ public class HttpLog {
         sb.append(
                 "└───────────────────────────────────────────────────────────────────────────────────────\n");
 
-        Logs.i(App.APP.defaultLogTag() + "_API", sb.toString());
+        Logs.i(AutilsConfigs.configs().defaultLogTag() + "_API", sb.toString());
     }
 
     private String dealBody(StringBuilder sb, String body) {

@@ -1,9 +1,13 @@
 package cn.yuanye1818.autils.core.net;
 
+import android.text.TextUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.yuanye1818.autils.core.utils.StringFunc;
 import cn.yuanye1818.autils.global.App;
+import cn.yuanye1818.autils.global.AutilsConfigs;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -11,31 +15,68 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 public class RetrofitManager {
 
     private static Map<String, Retrofit> retrofits;
+    private static String DEFAULT_GROUP = "default_group";
 
-    private static Retrofit newRetrofit(String baseUrl) {
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(new BaseInterceptor(App.APP.isLog())).build();
+    public static Retrofit getRetrofit(String group, String baseUrl,
+            RetrofitCreater retrofitCreater, OkHttpClientCreater okHttpClientCreater) {
+        if (StringFunc.isBlank(group)) {
+            group = DEFAULT_GROUP;
+        }
+        String retrofitName = retrofitName(group, baseUrl);
+        Retrofit retrofit = null;
+        if (retrofits == null) {
+            retrofits = new HashMap<String, Retrofit>();
+        } else {
+            retrofit = retrofits.get(retrofitName);
+        }
+        if (retrofit == null) {
+
+            if (okHttpClientCreater == null) {
+                okHttpClientCreater = AutilsConfigs.configs().getDefaultOkHttpClientCreater();
+            }
+
+            OkHttpClient okHttpClient = null;
+            if (okHttpClientCreater != null) {
+                okHttpClient = okHttpClientCreater.create();
+            } else {
+                okHttpClient = createOkHttpClient();
+            }
+
+            if (retrofitCreater == null) {
+                retrofitCreater = AutilsConfigs.configs().getDefaultRetrofitCreater();
+            }
+
+            if (retrofitCreater == null) {
+                retrofit = createRetrofit(okHttpClient, baseUrl);
+            } else {
+                retrofit = retrofitCreater.create(okHttpClient, baseUrl);
+            }
+            retrofits.put(retrofitName, retrofit);
+        }
+        return retrofit;
+    }
+
+    private static OkHttpClient createOkHttpClient() {
+        return new OkHttpClient.Builder()
+                .addInterceptor(new BaseInterceptor(AutilsConfigs.configs().isLog())).build();
+    }
+
+    private static Retrofit createRetrofit(OkHttpClient okHttpClient, String baseUrl) {
         return new Retrofit.Builder().client(okHttpClient)
                                      .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                                      .baseUrl(baseUrl).build();
     }
 
-    public static <T> T create(Class<T> tClass) {
-        return create(tClass, App.APP.getBaseUrl());
+    private static String retrofitName(String group, String baseUrl) {
+        return group + "::" + baseUrl;
     }
 
-    public static <T> T create(Class<T> tClass, String baseUrl) {
-        Retrofit retrofit = null;
-        if (retrofits == null) {
-            retrofits = new HashMap<String, Retrofit>();
-        } else {
-            retrofit = retrofits.get(baseUrl);
-        }
-        if (retrofit == null) {
-            retrofit = newRetrofit(baseUrl);
-            retrofits.put(baseUrl, retrofit);
-        }
-        return retrofit.create(tClass);
+    public static interface RetrofitCreater {
+        public Retrofit create(OkHttpClient okHttpClient, String baseUrl);
+    }
+
+    public static interface OkHttpClientCreater {
+        public OkHttpClient create();
     }
 
 

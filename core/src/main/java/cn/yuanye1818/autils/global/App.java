@@ -27,17 +27,8 @@ public abstract class App extends Application implements Thread.UncaughtExceptio
     @Override
     public void uncaughtException(Thread t, Throwable e) {
         Logs.w(e);
-        onGlobalException(t, e);
+        AutilsConfigs.configs().onGlobalException(t, e);
     }
 
-    //处理全局异常
-    protected abstract void onGlobalException(Thread t, Throwable e);
-
-    public abstract String defaultLogTag();
-
-    public abstract boolean isLog();
-
-    public abstract JsonHolder createJsonHolder();
-
-    public abstract String getBaseUrl();
+    public abstract AutilsConfigs createConfigs();
 }

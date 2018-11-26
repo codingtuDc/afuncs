@@ -29,6 +29,11 @@ public class NetMaker01ForNet extends MyProcessor {
     public static final String NET_PACKAGE = "cn.yuanye1818.autils.core.net";
     public static final String CLASS_API = "cn.yuanye1818.autils.core.net.Api";
     public static final String CLASS_NET_UTILS = "cn.yuanye1818.autils.core.net.NetUtils";
+    public static final String CLASS_FLOWABLE = "io.reactivex.Flowable";
+    public static final String CLASS_RESULT = "retrofit2.adapter.rxjava2.Result";
+    public static final String CLASS_RESPONSE_BODY = "okhttp3.ResponseBody";
+    public static final String CLASS_RETROFIT = "retrofit2.Retrofit";
+
 
     private HashMap<String, String> baseUrls = new HashMap<String, String>();
     private ArrayList<FieldSpec> baseUrlFieldSpecs = new ArrayList<FieldSpec>();
@@ -109,10 +114,57 @@ public class NetMaker01ForNet extends MyProcessor {
 
         builder.returns(classApi);
 
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("return $T.api(new $T.CreateApi() {\n");
+        sb.append("  @Override\n");
+        sb.append("  public $T<$T<$T>> create($T retrofit) {\n");
+        sb.append("    return retrofit.create($T.class).$N(");
+
+
         ArrayList ps = new ArrayList();
         ps.add(classNetUtils);
         ps.add(classNetUtils);
+        ps.add(ClassName.bestGuess(CLASS_FLOWABLE));
+        ps.add(ClassName.bestGuess(CLASS_RESULT));
+        ps.add(ClassName.bestGuess(CLASS_RESPONSE_BODY));
+        ps.add(ClassName.bestGuess(CLASS_RETROFIT));
         ps.add(classService);
+        ps.add(methodName);
+
+
+        if (!isNull(parameters)) {
+
+            for (int i = 0; i < parameters.size(); i++) {
+
+                VariableElement methodParameter = parameters.get(i);
+
+                TypeMirror methodParameterType = methodParameter.asType();
+
+                TypeName typeName = TypeName.get(methodParameterType);
+
+                String paramName = methodParameter.getSimpleName().toString();
+
+                builder.addParameter(typeName, paramName,Modifier.FINAL);
+
+                ps.add(paramName);
+
+                if (i == 0) {
+                    sb.append("$N");
+                } else {
+                    sb.append(", $N");
+                }
+
+            }
+        }
+
+
+        sb.append(");\n");
+        sb.append("  }\n");
+        sb.append("}, $N");
+
+        ps.add(staticName);
+
 
         BaseUrl baseUrl = api.getAnnotation(BaseUrl.class);
 
@@ -135,44 +187,15 @@ public class NetMaker01ForNet extends MyProcessor {
                 valueName = baseUrls.get(value);
             }
 
-            url += ",$N";
+            url += ", $N";
             ps.add(valueName);
         }
 
-        ps.add(methodName);
-
-        StringBuilder sb = new StringBuilder();
-        if (!isNull(parameters)) {
-
-            for (int i = 0; i < parameters.size(); i++) {
-
-                VariableElement methodParameter = parameters.get(i);
-
-                TypeMirror methodParameterType = methodParameter.asType();
-
-                TypeName typeName = TypeName.get(methodParameterType);
-
-                String paramName = methodParameter.getSimpleName().toString();
-
-                builder.addParameter(typeName, paramName);
-
-                ps.add(paramName);
-
-                if (i == 0) {
-                    sb.append("$N");
-                } else {
-                    sb.append(",$N");
-                }
-
-            }
-        }
-
-        ps.add(staticName);
+        sb.append(url);
+        sb.append(");\n");
 
 
-        builder.addStatement(
-                "return $T.api($T.create($T.class" + url + ").$N(" + sb.toString() + "),$N)",
-                ps.toArray());
+        builder.addCode(sb.toString(), ps.toArray());
 
         methodSpecs.add(builder.build());
 

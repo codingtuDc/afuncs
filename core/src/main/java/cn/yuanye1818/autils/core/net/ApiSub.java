@@ -8,22 +8,63 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
+import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.Result;
 
 public class ApiSub implements Api {
-    private Flowable<Result<ResponseBody>> flowable;
+    private NetUtils.CreateApi createApi;
+    /**************************************************
+     *
+     * 回调的方法名字,默认的为api的方法名，可以自己设置名字
+     *
+     **************************************************/
     private String m;
+    private String group;
+    private String baseUrl;
+    private RetrofitManager.RetrofitCreater retrofitCreater;
+    private RetrofitManager.OkHttpClientCreater okHttpClientCreater;
 
-    public ApiSub(Flowable<Result<ResponseBody>> flowable, String m) {
-        this.flowable = flowable;
+    public ApiSub(NetUtils.CreateApi createApi, String m, String baseUrl) {
+        this.createApi = createApi;
+        this.baseUrl = baseUrl;
         this.m = m;
     }
+
+    /**************************************************
+     *
+     * 自定义配置方法
+     *
+     **************************************************/
 
     @Override
     public Api m(String m) {
         this.m = m;
         return this;
     }
+
+    @Override
+    public Api group(String group) {
+        this.group = group;
+        return this;
+    }
+
+    @Override
+    public Api retrofit(RetrofitManager.RetrofitCreater retrofitCreater) {
+        this.retrofitCreater = retrofitCreater;
+        return this;
+    }
+
+    @Override
+    public Api okHttp(RetrofitManager.OkHttpClientCreater okHttpClientCreater) {
+        this.okHttpClientCreater = okHttpClientCreater;
+        return this;
+    }
+
+    /**************************************************
+     *
+     * 请求方法
+     *
+     **************************************************/
 
     @Override
     public void main(NetBackI helper) {
@@ -54,14 +95,17 @@ public class ApiSub implements Api {
             work = Schedulers.trampoline();
         }
 
-        flowable.subscribeOn(work).observeOn(resultScheduler)
-                .subscribe(new Consumer<Result<ResponseBody>>() {
-                    @Override
-                    public void accept(Result<ResponseBody> result) throws Exception {
-                        if (helper != null)
-                            helper.accept(m, result);
-                    }
-                });
+        Retrofit retrofit = NetUtils
+                .getRetrofit(group, baseUrl, retrofitCreater, okHttpClientCreater);
+
+        createApi.create(retrofit).subscribeOn(work).observeOn(resultScheduler)
+                 .subscribe(new Consumer<Result<ResponseBody>>() {
+                     @Override
+                     public void accept(Result<ResponseBody> result) throws Exception {
+                         if (helper != null)
+                             helper.accept(m, result);
+                     }
+                 });
 
     }
 
