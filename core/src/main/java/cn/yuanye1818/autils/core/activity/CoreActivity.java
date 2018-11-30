@@ -4,23 +4,22 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ViewUtils;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-import cn.yuanye1818.autils.core.net.NetBackI;
-import cn.yuanye1818.autils.core.net.NetUtils;
+import cn.yuanye1818.autils.core.hero.Hero;
+import cn.yuanye1818.autils.core.hero.HeroFunc;
 import cn.yuanye1818.autils.core.utils.ActFunc;
 import cn.yuanye1818.autils.core.utils.ViewFunc;
 
 public class CoreActivity extends AppCompatActivity {
 
-    protected NetBackI net;
+    protected Hero hero;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        net = NetUtils.bindNet(this);
+        hero = HeroFunc.bind(getThis());
     }
 
     @Override

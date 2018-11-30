@@ -1,30 +1,36 @@
 package cn.yuanye1818.autils;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.ViewUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import cn.yuanye1818.autils.compiler.annotation.BackType;
-import cn.yuanye1818.autils.compiler.annotation.NetBack;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import cn.yuanye1818.autils.compiler.annotation.net.BackType;
+import cn.yuanye1818.autils.compiler.annotation.net.NetBack;
 import cn.yuanye1818.autils.compiler.annotation.onclick.ClickView;
+import cn.yuanye1818.autils.compiler.annotation.view.FindView;
 import cn.yuanye1818.autils.core.activity.CoreActivity;
 import cn.yuanye1818.autils.core.activity.adapter.more.CoreMoreAdapter;
 import cn.yuanye1818.autils.core.activity.viewholder.CoreViewHolder;
 import cn.yuanye1818.autils.core.log.Logs;
-import cn.yuanye1818.autils.core.net.RetrofitManager;
+import cn.yuanye1818.autils.core.ls.Ls;
+import cn.yuanye1818.autils.core.net.Net;
 import cn.yuanye1818.autils.core.utils.ViewFunc;
 import cn.yuanye1818.autils.test.BeanBack;
-import cn.yuanye1818.autils.test.Net;
-import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class MainActivity extends CoreActivity {
 
-    private RecyclerView rv;
+    @FindView(R.id.rv)
+    RecyclerView rv;
     private MoreAdapter adapter;
 
     @Override
@@ -39,27 +45,92 @@ public class MainActivity extends CoreActivity {
         adapter.setOnLoadMore(new CoreMoreAdapter.OnLoadMore() {
             @Override
             public void onLoadMore(int page) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ArrayList<User> users = new ArrayList<User>();
+                        users.add(new User());
+                        users.addAll(users);
+                        users.addAll(users);
+                        users.addAll(users);
+                        users.addAll(users);
+                        users.addAll(users);
+                        users.addAll(users);
+                        users.addAll(users);
 
+
+                        adapter.updateItem(users);
+                    }
+                }, 1000);
             }
         });
-
+        adapter.setOnClickListener(hero);
         rv.setAdapter(adapter);
 
+        Net.getAlbumDetail("2005").main(hero);
 
+        HashMap<String, User> userMap = new HashMap<String, User>();
+        userMap.put("1", new User());
+        userMap.put("2", new User());
+        userMap.put("3", new User());
+        userMap.put("4", new User());
+        userMap.put("6", new User());
+        userMap.put("5", new User());
+        userMap.put("7", new User());
+
+    }
+
+    @NetBack
+    public void getAlbumDetail() {
+
+    }
+
+    @NetBack
+    public void getAlbumDetail(Throwable error, Response<ResponseBody> response) {
+
+    }
+
+    @NetBack(BeanBack.class)
+    public void getAlbumDetail(String messsage, @BackType User user) {
+
+    }
+
+    @ClickView(R.id.ll)
+    public void clickLl() {
+        Logs.line("clickLl");
+    }
+
+    @ClickView(R.id.avatarIv)
+    public void clickAvatar(View view, int position, User user) {
+        Logs.line("clickAvatar:" + view + " " + position + " " + user);
+    }
+
+    @ClickView(R.id.nameTv)
+    public void clickName(View view, User user) {
+        Logs.line("clickName:" + view + " user:" + user);
     }
 
     public static class MoreAdapter extends CoreMoreAdapter<MyViewHolder, User> {
 
         @Override
         protected void onBindItemViewHolder(MyViewHolder vh, int position) {
-
+            setOnClick(vh.ll, position, ts.get(position));
+            setOnClick(vh.avatarIv, position, ts.get(position));
+            setOnClick(vh.nameTv, position, ts.get(position));
         }
     }
 
     public static class MyViewHolder extends CoreViewHolder {
 
+        LinearLayout ll;
+        ImageView avatarIv;
+        TextView nameTv;
+
         public MyViewHolder(ViewGroup viewGroup) {
             super(R.layout.row_my, viewGroup);
+            ll = itemView.findViewById(R.id.ll);
+            avatarIv = itemView.findViewById(R.id.avatarIv);
+            nameTv = itemView.findViewById(R.id.nameTv);
         }
     }
 

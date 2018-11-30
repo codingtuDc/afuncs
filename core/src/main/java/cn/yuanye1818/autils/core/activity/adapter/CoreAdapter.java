@@ -2,16 +2,23 @@ package cn.yuanye1818.autils.core.activity.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.lang.reflect.Constructor;
 
+import cn.yuanye1818.autils.core.R;
 import cn.yuanye1818.autils.core.activity.viewholder.CoreViewHolder;
 import cn.yuanye1818.autils.core.log.Logs;
 import cn.yuanye1818.autils.core.utils.ClassFunc;
 
 public abstract class CoreAdapter<VH extends CoreViewHolder> extends RecyclerView.Adapter<VH> {
 
+    private View.OnClickListener onClickListener;
+
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
 
     protected CoreViewHolder createViewHolder(int p, ViewGroup viewGroup) {
         try {
@@ -34,5 +41,40 @@ public abstract class CoreAdapter<VH extends CoreViewHolder> extends RecyclerVie
     protected boolean isLastPosition(int position) {
         return position == (getItemCount() - 1);
     }
+
+
+    /**************************************************
+     *
+     * onclick
+     *
+     **************************************************/
+    protected void setOnClick(View view) {
+        if (view != null && onClickListener != null)
+            view.setOnClickListener(onClickListener);
+    }
+
+
+    protected void setOnClick(View view, int position) {
+        if (view != null && onClickListener != null) {
+            view.setTag(R.id.tag_position, position);
+            view.setOnClickListener(onClickListener);
+        }
+    }
+
+    protected void setOnClick(View view, Object obj) {
+        if (view != null && onClickListener != null && obj != null) {
+            view.setTag(R.id.tag_obj, obj);
+            view.setOnClickListener(onClickListener);
+        }
+    }
+
+    protected void setOnClick(View view, int position, Object obj) {
+        if (view != null && onClickListener != null && obj != null) {
+            view.setTag(R.id.tag_position, position);
+            view.setTag(R.id.tag_obj, obj);
+            view.setOnClickListener(onClickListener);
+        }
+    }
+
 
 }

@@ -1,8 +1,9 @@
 package cn.yuanye1818.autils;
 
+import cn.yuanye1818.autils.core.bean.CoreBean;
 import cn.yuanye1818.autils.core.json.JsonFunc;
 
-public class User {
+public class User extends CoreBean {
 
     private String id;
     private String title;
@@ -23,8 +24,4 @@ public class User {
         this.title = title;
     }
 
-    @Override
-    public String toString() {
-        return JsonFunc.toJson(this);
-    }
 }

@@ -5,6 +5,12 @@ dependencies {
     implementation 'com.google.auto.service:auto-service:1.0-rc4'
     implementation 'com.squareup:javapoet:1.11.1'
     implementation project(':autils_compiler_annotation')
+    compileOnly files(org.gradle.internal.jvm.Jvm.current().getToolsJar())
+}
+
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
 }
 
 sourceCompatibility = "7"

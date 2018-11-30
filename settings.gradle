@@ -1,1 +1,1 @@
-include ':app', ':core', ':autils_compiler', ':autils_compiler_annotation', ':demo'
+include ':app', ':core', ':autils_compiler', ':autils_compiler_annotation'

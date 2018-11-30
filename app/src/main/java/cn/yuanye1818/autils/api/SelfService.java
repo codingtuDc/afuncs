@@ -1,8 +1,8 @@
 package cn.yuanye1818.autils.api;
 
 import cn.yuanye1818.autils.User;
-import cn.yuanye1818.autils.compiler.annotation.Api;
-import cn.yuanye1818.autils.compiler.annotation.BaseUrl;
+import cn.yuanye1818.autils.compiler.annotation.net.Api;
+import cn.yuanye1818.autils.compiler.annotation.net.BaseUrl;
 import io.reactivex.Flowable;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
