@@ -28,19 +28,12 @@ import javax.lang.model.type.TypeMirror;
 
 import cn.yuanye1818.autils.compiler.annotation.net.Api;
 import cn.yuanye1818.autils.compiler.annotation.net.BaseUrl;
+import cn.yuanye1818.autils.compiler.utils.Utils;
 
 @AutoService(Processor.class)
 @SupportedSourceVersion(SourceVersion.RELEASE_7)
 @SupportedAnnotationTypes({"cn.yuanye1818.autils.compiler.annotation.net.Api"})
 public class Maker00ForNet extends CoreMaker {
-
-    public static final String NET_PACKAGE = "cn.yuanye1818.autils.core.net";
-    public static final String CLASS_API = "cn.yuanye1818.autils.core.net.Api";
-    public static final String CLASS_NET_UTILS = "cn.yuanye1818.autils.core.net.NetUtils";
-    public static final String CLASS_FLOWABLE = "io.reactivex.Flowable";
-    public static final String CLASS_RESULT = "retrofit2.adapter.rxjava2.Result";
-    public static final String CLASS_RESPONSE_BODY = "okhttp3.ResponseBody";
-    public static final String CLASS_RETROFIT = "retrofit2.Retrofit";
 
 
     private HashMap<String, String> baseUrls = new HashMap<String, String>();
@@ -103,7 +96,7 @@ public class Maker00ForNet extends CoreMaker {
     private void dealMethod(TypeElement api, ExecutableElement methodElement) {
         String methodName = methodElement.getSimpleName().toString();
 
-        String staticName = getStaticName(methodName);
+        String staticName = Utils.getStaticName(methodName);
 
         defaultCodeFieldSpecs.add(FieldSpec.builder(String.class, staticName, Modifier.PUBLIC,
                                                     Modifier.STATIC, Modifier.FINAL)
@@ -207,21 +200,6 @@ public class Maker00ForNet extends CoreMaker {
 
         methodSpecs.add(builder.build());
 
-    }
-
-    private String getStaticName(String str) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < str.length(); i++) {
-            char c = str.charAt(i);
-            if (c >= 97 && c <= 122) {
-                sb.append((char) (c - 32));
-            } else if (c >= 65 && c <= 90) {
-                sb.append("_" + c);
-            } else {
-                sb.append(c);
-            }
-        }
-        return sb.toString();
     }
 
 }

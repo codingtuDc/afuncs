@@ -1,5 +1,7 @@
 package cn.yuanye1818.autils;
 
+import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
@@ -14,16 +16,20 @@ import java.util.HashMap;
 
 import cn.yuanye1818.autils.compiler.annotation.net.BackType;
 import cn.yuanye1818.autils.compiler.annotation.net.NetBack;
+import cn.yuanye1818.autils.compiler.annotation.onactivityresult.OnResult;
 import cn.yuanye1818.autils.compiler.annotation.onclick.ClickView;
+import cn.yuanye1818.autils.compiler.annotation.permission.PermissionCheck;
 import cn.yuanye1818.autils.compiler.annotation.view.FindView;
 import cn.yuanye1818.autils.core.activity.CoreActivity;
 import cn.yuanye1818.autils.core.activity.adapter.more.CoreMoreAdapter;
 import cn.yuanye1818.autils.core.activity.viewholder.CoreViewHolder;
 import cn.yuanye1818.autils.core.log.Logs;
-import cn.yuanye1818.autils.core.ls.Ls;
 import cn.yuanye1818.autils.core.net.Net;
+import cn.yuanye1818.autils.core.permission.PermissionChecker;
 import cn.yuanye1818.autils.core.utils.ViewFunc;
 import cn.yuanye1818.autils.test.BeanBack;
+import cn.yuanye1818.autils.test.RequestCode;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
@@ -69,16 +75,25 @@ public class MainActivity extends CoreActivity {
 
         Net.getAlbumDetail("2005").main(hero);
 
-        HashMap<String, User> userMap = new HashMap<String, User>();
-        userMap.put("1", new User());
-        userMap.put("2", new User());
-        userMap.put("3", new User());
-        userMap.put("4", new User());
-        userMap.put("6", new User());
-        userMap.put("5", new User());
-        userMap.put("7", new User());
+        PermissionChecker.checkStoreFile(hero);
 
     }
+
+    @OnResult(RequestCode.STORY)
+    public void storyBack(Intent data) {
+
+    }
+    @OnResult(RequestCode.STORY_LIST)
+    public void storyListBack(Intent data) {
+
+    }
+
+
+    @PermissionCheck(value = Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    public void storeFile() {
+
+    }
+
 
     @NetBack
     public void getAlbumDetail() {

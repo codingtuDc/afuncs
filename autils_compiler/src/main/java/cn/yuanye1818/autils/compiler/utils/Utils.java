@@ -1,9 +1,12 @@
 package cn.yuanye1818.autils.compiler.utils;
 
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.JavaFile;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.MirroredTypeException;
@@ -22,6 +25,12 @@ import static cn.yuanye1818.autils.compiler.utils.ListUtils.ls;
 public class Utils {
 
     private static Types typeUtils;
+    private static ProcessingEnvironment processingEnv;
+
+
+    public static void setProcessingEnv(ProcessingEnvironment processingEnv) {
+        Utils.processingEnv = processingEnv;
+    }
 
     public static String getHeroName(CE ce) {
         return ce.fullName() + "_Hero";
@@ -116,4 +125,36 @@ public class Utils {
         });
     }
 
+    public static String nameFirstUpper(String name) {
+        char[] chars = name.toCharArray();
+        if (chars[0] >= 97 && chars[0] <= 122) {
+            chars[0] -= 32;
+        }
+        return new String(chars);
+    }
+
+    public static void build(ClassBuilder builder) {
+        try {
+            JavaFile.builder(builder.getPackgeName(), builder.build()).build()
+                    .writeTo(processingEnv.getFiler());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static String getStaticName(String str) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (c >= 97 && c <= 122) {
+                sb.append((char) (c - 32));
+            } else if (c >= 65 && c <= 90) {
+                sb.append("_" + c);
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
 }

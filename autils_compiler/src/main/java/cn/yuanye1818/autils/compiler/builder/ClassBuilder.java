@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.lang.model.element.Modifier;
 
+import cn.yuanye1818.autils.compiler.utils.ListUtils;
+
 public class ClassBuilder {
     private ClassName className;
     private String fullName;
@@ -17,8 +19,8 @@ public class ClassBuilder {
     private MethodSpec.Builder constructorBuilder;
 
 
-    public ClassBuilder(String heroName) {
-        this.fullName = heroName;
+    public ClassBuilder(String fullName) {
+        this.fullName = fullName;
         this.className = ClassName.bestGuess(this.fullName);
         builder = TypeSpec.classBuilder(this.className.simpleName());
         builder.addModifiers(Modifier.PUBLIC);
@@ -51,6 +53,18 @@ public class ClassBuilder {
     }
 
     public TypeSpec build() {
+
+        ListUtils.ls(methodBuilders, new ListUtils.Each<MethodBuilder>() {
+            @Override
+            public boolean each(int position, MethodBuilder b) {
+                builder.addMethod(b.build());
+                return false;
+            }
+        });
+
+        if (constructorBuilder != null)
+            builder.addMethod(constructorBuilder.build());
+
         return builder.build();
     }
 

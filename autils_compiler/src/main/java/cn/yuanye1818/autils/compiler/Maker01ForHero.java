@@ -25,8 +25,10 @@ import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.element.VariableElement;
 
 import cn.yuanye1818.autils.compiler.annotation.net.NetBack;
+import cn.yuanye1818.autils.compiler.annotation.onactivityresult.OnResult;
 import cn.yuanye1818.autils.compiler.annotation.onclick.ClickTag;
 import cn.yuanye1818.autils.compiler.annotation.onclick.ClickView;
+import cn.yuanye1818.autils.compiler.annotation.permission.PermissionCheck;
 import cn.yuanye1818.autils.compiler.annotation.view.FindView;
 import cn.yuanye1818.autils.compiler.element.CE;
 import cn.yuanye1818.autils.compiler.builder.ClassBuilder;
@@ -46,27 +48,13 @@ import static java.util.Objects.requireNonNull;
 public class Maker01ForHero extends CoreMaker {
 
     public static final String METHOD_SET_ON_CLICK = "setOnClick";
+    public static final String METHOD_GET_ACT = "getAct";
+    public static final String METHOD_ON_PERMISSIONS_BACK = "onPermissionsBack";
+    public static final String METHOD_ON_ACTIVITY_RESULT = "onActivityResult";
     public static final String METHOD_ON_CLICK = "onClick";
     public static final String METHOD_ACCEPT = "accept";
 
-    public static final String CLASS_HERO = "cn.yuanye1818.autils.core.hero.Hero";
-    public static final String CLASS_VIEW = "android.view.View";
-    public static final String CLASS_RESULT = "retrofit2.adapter.rxjava2.Result";
-    public static final String CLASS_RESPONSE_BODY = "okhttp3.ResponseBody";
-    public static final String CLASS_LOGS = "cn.yuanye1818.autils.core.log.Logs";
-    public static final String CLASS_THROWABLE = Throwable.class.getName();
-    public static final String CLASS_RESPONSE = "retrofit2.Response";
-    public static final String CLASS_OVERRIDE = Override.class.getName();
-
-    public static final ClassName heroClass = ClassName.bestGuess(CLASS_HERO);
-    public static final ClassName viewClass = ClassName.bestGuess(CLASS_VIEW);
-    public static final ClassName stringClass = ClassName.bestGuess(String.class.getName());
-    public static final ClassName resultClass = ClassName.bestGuess(CLASS_RESULT);
-    public static final ClassName responseBodyClass = ClassName.bestGuess(CLASS_RESPONSE_BODY);
-    public static final ClassName logsClass = ClassName.bestGuess(CLASS_LOGS);
-    public static final ClassName throwableClass = ClassName.bestGuess(CLASS_THROWABLE);
-    public static final ClassName responseClass = ClassName.bestGuess(CLASS_RESPONSE);
-    public static final ClassName overrideClass = ClassName.bestGuess(CLASS_OVERRIDE);
+    public static final String BINDER_NAME = "binder";
 
     private ArrayList<ClassBuilder> cs = new ArrayList<ClassBuilder>();
 
@@ -101,36 +89,95 @@ public class Maker01ForHero extends CoreMaker {
                 return false;
             }
         });
-
-        ls(cs, new Each<ClassBuilder>() {
+        ls(roundEnvironment.getElementsAnnotatedWith(PermissionCheck.class), new Each<Element>() {
             @Override
-            public boolean each(int position, final ClassBuilder classBuilder) {
-
-                List<MethodBuilder> methodBuilders = classBuilder.getMethodBuilders();
-
-                ls(methodBuilders, new Each<MethodBuilder>() {
-                    @Override
-                    public boolean each(int position, MethodBuilder methodBuilder) {
-                        classBuilder.builder().addMethod(methodBuilder.builder().build());
-                        return false;
-                    }
-                });
-
-                classBuilder.builder().addMethod(classBuilder.constructorBuilder().build());
-
-
-                JavaFile javaFile = JavaFile
-                        .builder(classBuilder.getPackgeName(), classBuilder.build()).build();
-                try {
-                    javaFile.writeTo(processingEnv.getFiler());
-                } catch (IOException e) {
-                    e.printStackTrace();
+            public boolean each(int position, Element element) {
+                if (element instanceof ExecutableElement) {
+                    dealPermissionCheckElement((ExecutableElement) element);
+                }
+                return false;
+            }
+        });
+        ls(roundEnvironment.getElementsAnnotatedWith(OnResult.class), new Each<Element>() {
+            @Override
+            public boolean each(int position, Element element) {
+                if (element instanceof ExecutableElement) {
+                    dealOnResultElement((ExecutableElement) element);
                 }
                 return false;
             }
         });
 
+        ls(cs, new Each<ClassBuilder>() {
+            @Override
+            public boolean each(int position, final ClassBuilder classBuilder) {
+                Utils.build(classBuilder);
+                return false;
+            }
+        });
+
         return true;
+    }
+
+    private void dealOnResultElement(ExecutableElement e) {
+        ME me = new ME(e);
+        CE ce = me.ce();
+        ClassBuilder heroClass = getClass(ce, Utils.getHeroName(ce));
+
+        final MethodBuilder onActivityResult = heroClass.getMethod(METHOD_ON_ACTIVITY_RESULT);
+
+        if (me.e().getModifiers().contains(Modifier.PRIVATE)) {
+            throw new RuntimeException("回调方法 " + me.name() + " 必须为公有方法");
+        }
+
+        OnResult annotation = me.e().getAnnotation(OnResult.class);
+        int value = annotation.value();
+
+        //if (resultCode == Activity.RESULT_OK && requestCode == RequestCode.STORY) {
+        //            binder.storyBack(data);
+        //        }
+        onActivityResult.addCodeLine("  if (resultCode == $T.RESULT_OK && requestCode == $L) {",
+                                     activityClass, value);
+        onActivityResult.addCodeLine("    binder.$N(data);", me.name());
+        onActivityResult.addCodeLine("  }");
+
+    }
+
+    private void dealPermissionCheckElement(ExecutableElement e) {
+        ME me = new ME(e);
+        CE ce = me.ce();
+        ClassBuilder heroClass = getClass(ce, Utils.getHeroName(ce));
+
+        final MethodBuilder onPermissionBack = heroClass.getMethod(METHOD_ON_PERMISSIONS_BACK);
+
+        if (me.e().getModifiers().contains(Modifier.PRIVATE)) {
+            throw new RuntimeException("回调方法 " + me.name() + " 必须为公有方法");
+        }
+
+        PermissionCheck annotation = me.e().getAnnotation(PermissionCheck.class);
+
+        if (annotation.isForce()) {
+            onPermissionBack
+                    .addCodeLine("  if (requestCode == $T.CHECK_$N) {", permissionCheckerClass,
+                                 Utils.getStaticName(me.name()));
+            onPermissionBack.addCodeLine("    if ($T.allow(grantResults)) {", permissionUtilsClass);
+            onPermissionBack.addCodeLine("      binder.$N();", me.name());
+            onPermissionBack.addCodeLine("    } else {");
+            onPermissionBack.addCodeLine("      $T.toast(\"您禁用了相关权限，无法完成操作\");", toastFuncClass);
+            onPermissionBack.addCodeLine("    }");
+            onPermissionBack.addCodeLine("  }");
+        } else {
+            onPermissionBack
+                    .addCodeLine("  if (requestCode == $T.CHECK_$N) {", permissionCheckerClass,
+                                 Utils.getStaticName(me.name()));
+            onPermissionBack.addCodeLine("    try {");
+            onPermissionBack.addCodeLine("      binder.$N();", me.name());
+            onPermissionBack.addCodeLine("    } catch (Exception e) {");
+            onPermissionBack.addCodeLine("      $T.w(e);", logsClass);
+            onPermissionBack.addCodeLine("    }");
+            onPermissionBack.addCodeLine("  }");
+        }
+
     }
 
     private void dealFindViewElement(VariableElement e) {
@@ -150,8 +197,8 @@ public class Maker01ForHero extends CoreMaker {
         FindView annotation = pe.e().getAnnotation(FindView.class);
 
         constructorBuilder.addCode(
-                "this.act." + pe.name() + " = this.act.findViewById(" + annotation
-                        .value() + ");\n");
+                "this.$N." + pe.name() + " = this.$N.findViewById(" + annotation.value() + ");\n",
+                BINDER_NAME, BINDER_NAME);
 
     }
 
@@ -174,7 +221,8 @@ public class Maker01ForHero extends CoreMaker {
 
         if (Utils.isTextEmpty(netBackHandler)) {
             accept.builder()
-                  .addCode("if ($S.equals(code)) {\n  this.act.$N(", me.name(), me.name());
+                  .addCode("if ($S.equals(code)) {\n  this.$N.$N(", me.name(), BINDER_NAME,
+                           me.name());
             ls(params, new Each<VariableElement>() {
                 @Override
                 public boolean each(int position, VariableElement e) {
@@ -183,7 +231,7 @@ public class Maker01ForHero extends CoreMaker {
                         accept.builder().addCode(", ");
 
                     PE pe = new PE(e);
-                    if (CLASS_THROWABLE.equals(pe.typeName())) {
+                    if (Throwable.class.getName().equals(pe.typeName())) {
                         accept.builder().addCode("result.error()");
                     } else if (CLASS_RESPONSE
                             .equals(pe.typeName()) || (CLASS_RESPONSE + "<" + CLASS_RESPONSE_BODY + ">")
@@ -207,11 +255,11 @@ public class Maker01ForHero extends CoreMaker {
 
             Utils.addClassTypeCode(accept, params);
 
-            accept.builder().addCode("() {\n    @$T\n    public void back(", overrideClass);
+            accept.builder().addCode("() {\n    @$T\n    public void back(", Override.class);
 
             Utils.addMethodParamDefineCode(accept, params);
 
-            accept.builder().addCode(") {\n      act.$N(", me.name());
+            accept.builder().addCode(") {\n      $N.$N(", BINDER_NAME, me.name());
 
             Utils.addUseMethodParamCode(accept, params);
 
@@ -242,7 +290,7 @@ public class Maker01ForHero extends CoreMaker {
 
                     onClick.builder().addCode("if (id == $L) {\n", id);
 
-                    onClick.builder().addCode("  act." + me.e().getSimpleName() + "(");
+                    onClick.builder().addCode("  $N.$N(", BINDER_NAME, me.e().getSimpleName());
 
                     ls(parameters, new Each<VariableElement>() {
                         @Override
@@ -285,9 +333,8 @@ public class Maker01ForHero extends CoreMaker {
                     onClick.builder().addCode("}\n");
 
                 } else {
-                    onClick.builder()
-                           .addCode("if (id == $L) {\n  act." + me.e().getSimpleName() + "();\n}\n",
-                                    id);
+                    onClick.builder().addCode("if (id == $L) {\n  $N.$N();\n}\n", id, BINDER_NAME,
+                                              me.e().getSimpleName());
                 }
                 return false;
             }
@@ -303,12 +350,12 @@ public class Maker01ForHero extends CoreMaker {
         } else {
 
             ClassBuilder heroClass = new ClassBuilder(heroName);
-            heroClass.builder().addField(ce.className(), "act", Modifier.PRIVATE)
-                     .superclass(Maker01ForHero.heroClass);
+            heroClass.builder().addField(ce.className(), BINDER_NAME, Modifier.PRIVATE)
+                     .addSuperinterface(Maker01ForHero.heroClass);
             //
             MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder();
-            constructorBuilder.addParameter(ce.className(), "act");
-            constructorBuilder.addCode("this.act=act;\n");
+            constructorBuilder.addParameter(ce.className(), BINDER_NAME);
+            constructorBuilder.addCode("this.$N=$N;\n", BINDER_NAME, BINDER_NAME);
             heroClass.addConstructor(constructorBuilder);
             //
             MethodBuilder onClick = new MethodBuilder(METHOD_ON_CLICK);
@@ -318,7 +365,7 @@ public class Maker01ForHero extends CoreMaker {
             //
             MethodBuilder accept = new MethodBuilder(METHOD_ACCEPT);
             accept.builder().addAnnotation(Override.class).addModifiers(Modifier.PUBLIC)
-                  .addParameter(stringClass, "code")
+                  .addParameter(String.class, "code")
                   .addParameter(ParameterizedTypeName.get(resultClass, responseBodyClass),
                                 "result");
             heroClass.addMethod(accept);
@@ -327,8 +374,42 @@ public class Maker01ForHero extends CoreMaker {
             setOnClick.builder().addModifiers(Modifier.PRIVATE);
             setOnClick.builder().addParameter(TypeName.INT, "id");
             setOnClick.builder().addCode(
-                    "try {\n  this.act.findViewById(id).setOnClickListener(this);\n} catch (Exception e) {\n  \n}\n");
+                    "try {\n  this.$N.findViewById(id).setOnClickListener(this);\n} catch (Exception e) {\n  \n}\n",
+                    BINDER_NAME);
             heroClass.addMethod(setOnClick);
+            // @Override
+            //    public Activity getAct() {
+            //        return binder instanceof Activity ? binder : null;
+            //    }
+            MethodBuilder getAct = new MethodBuilder(METHOD_GET_ACT);
+            getAct.publicMethod();
+            getAct.builder().returns(activityClass);
+            getAct.builder().addAnnotation(Override.class);
+            getAct.addCodeLine("  return binder instanceof $T ? binder : null;", activityClass);
+            heroClass.addMethod(getAct);
+
+            //            @Override
+            //            public void onPermissionsBack(int requestCode, String[] permissions, int[] grantResults) {
+
+            MethodBuilder onPermissionBack = new MethodBuilder(METHOD_ON_PERMISSIONS_BACK);
+            onPermissionBack.builder().addAnnotation(Override.class);
+            onPermissionBack.publicMethod();
+            onPermissionBack.addParameter(int.class, "requestCode");
+            onPermissionBack.addParameter(String[].class, "permissions");
+            onPermissionBack.addParameter(int[].class, "grantResults");
+            heroClass.addMethod(onPermissionBack);
+            //    @Override
+            //    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            //
+            //    }
+            MethodBuilder onActivityResult = new MethodBuilder(METHOD_ON_ACTIVITY_RESULT);
+            onActivityResult.builder().addAnnotation(Override.class);
+            onActivityResult.publicMethod();
+            onActivityResult.addParameter(int.class, "requestCode");
+            onActivityResult.addParameter(int.class, "resultCode");
+            onActivityResult.addParameter(intentClass, "data");
+            heroClass.addMethod(onActivityResult);
+
 
             cs.add(heroClass);
             return heroClass;

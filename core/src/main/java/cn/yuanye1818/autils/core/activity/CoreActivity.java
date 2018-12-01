@@ -1,7 +1,10 @@
 package cn.yuanye1818.autils.core.activity;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -67,5 +70,18 @@ public class CoreActivity extends AppCompatActivity {
 
     //finish之前调用
     protected void beforeFinish() {
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+            @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        hero.onPermissionsBack(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        hero.onActivityResult(requestCode, resultCode, data);
     }
 }
