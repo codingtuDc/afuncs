@@ -3,16 +3,12 @@ package cn.yuanye1818.autils;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import cn.yuanye1818.autils.compiler.annotation.net.BackType;
 import cn.yuanye1818.autils.compiler.annotation.net.NetBack;
@@ -23,13 +19,12 @@ import cn.yuanye1818.autils.compiler.annotation.view.FindView;
 import cn.yuanye1818.autils.core.activity.CoreActivity;
 import cn.yuanye1818.autils.core.activity.adapter.more.CoreMoreAdapter;
 import cn.yuanye1818.autils.core.activity.viewholder.CoreViewHolder;
+import cn.yuanye1818.autils.core.image.ImageGetter;
 import cn.yuanye1818.autils.core.log.Logs;
 import cn.yuanye1818.autils.core.net.Net;
 import cn.yuanye1818.autils.core.permission.PermissionChecker;
-import cn.yuanye1818.autils.core.utils.ViewFunc;
 import cn.yuanye1818.autils.test.BeanBack;
-import cn.yuanye1818.autils.test.RequestCode;
-import okhttp3.RequestBody;
+import global.RequestCode;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
@@ -45,44 +40,20 @@ public class MainActivity extends CoreActivity {
         setContentView(R.layout.activity_main);
         rv = findViewById(R.id.rv);
 
-        ViewFunc.setRecyclerViewLinearVertical(rv);
-
-        adapter = new MoreAdapter();
-        adapter.setOnLoadMore(new CoreMoreAdapter.OnLoadMore() {
-            @Override
-            public void onLoadMore(int page) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ArrayList<User> users = new ArrayList<User>();
-                        users.add(new User());
-                        users.addAll(users);
-                        users.addAll(users);
-                        users.addAll(users);
-                        users.addAll(users);
-                        users.addAll(users);
-                        users.addAll(users);
-                        users.addAll(users);
-
-
-                        adapter.updateItem(users);
-                    }
-                }, 1000);
-            }
-        });
-        adapter.setOnClickListener(hero);
-        rv.setAdapter(adapter);
-
-        Net.getAlbumDetail("2005").main(hero);
-
         PermissionChecker.checkStoreFile(hero);
 
+        Net.getAlbumDetail("2055").main(hero);
+
+        ImageGetter.fromCamera(getThis(), image -> {
+
+        });
     }
 
     @OnResult(RequestCode.STORY)
     public void storyBack(Intent data) {
 
     }
+
     @OnResult(RequestCode.STORY_LIST)
     public void storyListBack(Intent data) {
 

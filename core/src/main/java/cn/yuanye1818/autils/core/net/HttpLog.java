@@ -1,8 +1,5 @@
 package cn.yuanye1818.autils.core.net;
 
-import android.graphics.Bitmap;
-import android.text.TextUtils;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
@@ -11,8 +8,7 @@ import java.util.List;
 
 import cn.yuanye1818.autils.core.log.Logs;
 import cn.yuanye1818.autils.core.utils.StringFunc;
-import cn.yuanye1818.autils.global.App;
-import cn.yuanye1818.autils.global.AutilsConfigs;
+import cn.yuanye1818.autils.global.CoreConfigs;
 
 /**
  * Created by cute on 2017/12/14.
@@ -115,7 +111,7 @@ public class HttpLog {
     }
 
     public void log() {
-        if (!AutilsConfigs.configs().isLog()) {
+        if (!CoreConfigs.configs().isLog()) {
             return;
         }
 
@@ -166,7 +162,7 @@ public class HttpLog {
         if (isFailed) {
             sb.append("│\t<-- 请求失败\n");
             if (failedThrowable != null) {
-                Logs.w(AutilsConfigs.configs().defaultLogTag() + "_API", failedThrowable);
+                Logs.w(CoreConfigs.configs().defaultLogTag() + "_API", failedThrowable);
             }
         } else {
             sb.append(
@@ -190,7 +186,7 @@ public class HttpLog {
         sb.append(
                 "└───────────────────────────────────────────────────────────────────────────────────────\n");
 
-        Logs.i(AutilsConfigs.configs().defaultLogTag() + "_API", sb.toString());
+        Logs.i(CoreConfigs.configs().defaultLogTag() + "_API", sb.toString());
     }
 
     private String dealBody(StringBuilder sb, String body) {

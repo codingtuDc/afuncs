@@ -2,7 +2,6 @@ package cn.yuanye1818.autils.global;
 
 import android.app.Application;
 
-import cn.yuanye1818.autils.core.json.jsonholder.JsonHolder;
 import cn.yuanye1818.autils.core.log.Logs;
 
 /*************************************************
@@ -27,8 +26,10 @@ public abstract class App extends Application implements Thread.UncaughtExceptio
     @Override
     public void uncaughtException(Thread t, Throwable e) {
         Logs.w(e);
-        AutilsConfigs.configs().onGlobalException(t, e);
+        CoreConfigs.configs().onGlobalException(t, e);
     }
 
-    public abstract AutilsConfigs createConfigs();
+    public abstract CoreConfigs createConfigs();
+
+    public abstract String getPicDirName();
 }

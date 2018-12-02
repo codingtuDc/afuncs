@@ -8,7 +8,6 @@ import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
-import javax.rmi.CORBA.Util;
 
 import cn.yuanye1818.autils.compiler.utils.Utils;
 
@@ -23,6 +22,10 @@ public abstract class CoreMaker extends AbstractProcessor {
     //
     public static final String CLASS_HERO = "cn.yuanye1818.autils.core.hero.Hero";
     public static final ClassName heroClass = ClassName.bestGuess(CLASS_HERO);
+    //
+    public static final String CLASS_PERMISSION_HELPER = "cn.yuanye1818.autils.core.permission.PermissionHelper";
+    public static final ClassName permissionHelperClass = ClassName
+            .bestGuess(CLASS_PERMISSION_HELPER);
     //
     public static final String CLASS_VIEW = "android.view.View";
     public static final ClassName viewClass = ClassName.bestGuess(CLASS_VIEW);
@@ -42,12 +45,8 @@ public abstract class CoreMaker extends AbstractProcessor {
     public static final String CLASS_RESPONSE = "retrofit2.Response";
     public static final ClassName responseClass = ClassName.bestGuess(CLASS_RESPONSE);
     //
-    public static final String CLASS_PERMISSION_UTILS = "cn.yuanye1818.autils.core.permission.PermissionUtils";
-    public static final ClassName permissionUtilsClass = ClassName
-            .bestGuess(CLASS_PERMISSION_UTILS);
-    //
-    public static final String CLASS_PREFERENCES = "cn.yuanye1818.autils.global.Preferences";
-    public static final ClassName preferencesClass = ClassName.bestGuess(CLASS_PREFERENCES);
+    public static final String CLASS_PERMISSION_FUNC = "cn.yuanye1818.autils.core.permission.PermissionFunc";
+    public static final ClassName permissionFuncClass = ClassName.bestGuess(CLASS_PERMISSION_FUNC);
     //
     public static final String CLASS_INTENT = "android.content.Intent";
     public static final ClassName intentClass = ClassName.bestGuess(CLASS_INTENT);

@@ -2,12 +2,10 @@ package cn.yuanye1818.autils.compiler;
 
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -21,7 +19,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.element.VariableElement;
 
 import cn.yuanye1818.autils.compiler.annotation.net.NetBack;
@@ -160,7 +157,7 @@ public class Maker01ForHero extends CoreMaker {
             onPermissionBack
                     .addCodeLine("  if (requestCode == $T.CHECK_$N) {", permissionCheckerClass,
                                  Utils.getStaticName(me.name()));
-            onPermissionBack.addCodeLine("    if ($T.allow(grantResults)) {", permissionUtilsClass);
+            onPermissionBack.addCodeLine("    if ($T.allow(grantResults)) {", permissionFuncClass);
             onPermissionBack.addCodeLine("      binder.$N();", me.name());
             onPermissionBack.addCodeLine("    } else {");
             onPermissionBack.addCodeLine("      $T.toast(\"您禁用了相关权限，无法完成操作\");", toastFuncClass);
@@ -329,9 +326,7 @@ public class Maker01ForHero extends CoreMaker {
                     });
 
                     onClick.builder().addCode(");\n");
-
                     onClick.builder().addCode("}\n");
-
                 } else {
                     onClick.builder().addCode("if (id == $L) {\n  $N.$N();\n}\n", id, BINDER_NAME,
                                               me.e().getSimpleName());
@@ -409,7 +404,6 @@ public class Maker01ForHero extends CoreMaker {
             onActivityResult.addParameter(int.class, "resultCode");
             onActivityResult.addParameter(intentClass, "data");
             heroClass.addMethod(onActivityResult);
-
 
             cs.add(heroClass);
             return heroClass;

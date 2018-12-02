@@ -2,18 +2,16 @@ package cn.yuanye1818.autils.test;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.SparseArray;
 import android.view.View;
-
-import java.io.File;
 
 import cn.yuanye1818.autils.MainActivity;
 import cn.yuanye1818.autils.R;
 import cn.yuanye1818.autils.User;
 import cn.yuanye1818.autils.core.hero.Hero;
 import cn.yuanye1818.autils.core.log.Logs;
-import cn.yuanye1818.autils.core.permission.PermissionUtils;
+import cn.yuanye1818.autils.core.permission.PermissionFunc;
 import cn.yuanye1818.autils.core.utils.ToastFunc;
+import global.RequestCode;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
@@ -62,7 +60,7 @@ public class MainActivity_Hero implements Hero {
 
     @Override
     public Activity getAct() {
-        return binder instanceof Activity ? binder : null;
+        return null;
     }
 
     @Override
@@ -76,7 +74,7 @@ public class MainActivity_Hero implements Hero {
         }
 
         if (requestCode == PermissonChecker.CHECK_STORE_FILE) {
-            if (PermissionUtils.allow(grantResults)) {
+            if (PermissionFunc.allow(grantResults)) {
                 binder.storeFile();
             } else {
                 ToastFunc.toast("您禁用了相关权限，无法完成操作");

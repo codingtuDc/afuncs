@@ -2,9 +2,9 @@ package global;
 
 import cn.yuanye1818.autils.core.json.jsonholder.JsonHolder;
 import cn.yuanye1818.autils.core.net.RetrofitManager;
-import cn.yuanye1818.autils.global.AutilsConfigs;
+import cn.yuanye1818.autils.global.CoreConfigs;
 
-public class Configs extends AutilsConfigs {
+public class Configs extends CoreConfigs {
     @Override
     protected void onGlobalException(Thread t, Throwable e) {
     }

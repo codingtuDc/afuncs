@@ -3,7 +3,7 @@ package cn.yuanye1818.autils.core.net;
 import java.lang.reflect.Constructor;
 
 import cn.yuanye1818.autils.core.log.Logs;
-import cn.yuanye1818.autils.global.AutilsConfigs;
+import cn.yuanye1818.autils.global.CoreConfigs;
 import io.reactivex.Flowable;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
@@ -25,7 +25,7 @@ public class NetUtils extends RetrofitManager {
     }
 
     public static Api api(CreateApi createApi, String code) {
-        return api(createApi, code, AutilsConfigs.configs().getBaseUrl());
+        return api(createApi, code, CoreConfigs.configs().getBaseUrl());
     }
 
     public static Api api(CreateApi createApi, String code, String baseUrl) {

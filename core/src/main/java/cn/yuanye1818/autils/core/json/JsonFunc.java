@@ -4,8 +4,7 @@ import java.util.List;
 
 import cn.yuanye1818.autils.core.json.jsonholder.FastJsonHolder;
 import cn.yuanye1818.autils.core.json.jsonholder.JsonHolder;
-import cn.yuanye1818.autils.global.App;
-import cn.yuanye1818.autils.global.AutilsConfigs;
+import cn.yuanye1818.autils.global.CoreConfigs;
 
 /**************************************************
  *
@@ -17,7 +16,7 @@ public class JsonFunc {
 
     private static JsonHolder getJSON() {
         if (JSON == null) {
-            JSON = AutilsConfigs.configs().createJsonHolder();
+            JSON = CoreConfigs.configs().createJsonHolder();
             if (JSON == null)
                 JSON = new FastJsonHolder();
         }

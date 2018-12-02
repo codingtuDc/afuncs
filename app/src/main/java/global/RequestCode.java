@@ -1,4 +1,4 @@
-package cn.yuanye1818.autils.test;
+package global;
 
 public class RequestCode {
     public static final int STORY = 0;

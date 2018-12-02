@@ -7,8 +7,7 @@ import java.util.Iterator;
 
 import cn.yuanye1818.autils.core.utils.CollectionFunc;
 import cn.yuanye1818.autils.core.utils.StringFunc;
-import cn.yuanye1818.autils.global.App;
-import cn.yuanye1818.autils.global.AutilsConfigs;
+import cn.yuanye1818.autils.global.CoreConfigs;
 
 public class Logs {
 
@@ -33,15 +32,15 @@ public class Logs {
     }
 
     public static void i(Object msg) {
-        log(LEVEL_INFO, AutilsConfigs.configs().defaultLogTag() + "_I", msg);
+        log(LEVEL_INFO, CoreConfigs.configs().defaultLogTag() + "_I", msg);
     }
 
     public static void e(Object msg) {
-        log(LEVEL_ERROR, AutilsConfigs.configs().defaultLogTag() + "_E", msg);
+        log(LEVEL_ERROR, CoreConfigs.configs().defaultLogTag() + "_E", msg);
     }
 
     public static void w(Object msg) {
-        log(LEVEL_WARNING, AutilsConfigs.configs().defaultLogTag() + "_W", msg);
+        log(LEVEL_WARNING, CoreConfigs.configs().defaultLogTag() + "_W", msg);
     }
 
     public static void i(String tag, Object msg) {
@@ -57,7 +56,7 @@ public class Logs {
     }
 
     private static void log(int level, String tag, Object msg) {
-        if (AutilsConfigs.configs().isLog() && StringFunc.isNotBlank(tag)) {
+        if (CoreConfigs.configs().isLog() && StringFunc.isNotBlank(tag)) {
             if (msg == null) {
                 logNull(level, tag);
             } else if (msg instanceof String) {

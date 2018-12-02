@@ -5,15 +5,30 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 
 import cn.yuanye1818.autils.global.App;
+import cn.yuanye1818.autils.global.CorePreferences;
 
-public class PermissionUtils {
+public class PermissionFunc {
 
-    private static final int CHECK_PERMISSION = 0;
+    public static void check(PermissionHelper helper, String name, int code, String... ps) {
+        if (!CorePreferences.getPermissionChecked(name)) {
+            CorePreferences.putPermissionChecked(name);
+            check(helper, code, ps);
+        } else {
+            helper.onPermissionsBack(code, null, null);
+        }
+    }
 
-    public static boolean check(Activity act, String... permissioins) {
+    public static void check(PermissionHelper helper, int code, String... ps) {
+        if (check(helper.getAct(), code, ps)) {
+            helper.onPermissionsBack(code, ps, new int[ps.length]);
+        }
+    }
+
+
+    private static boolean check(Activity act, int code, String... permissioins) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!allow(permissioins)) {
-                act.requestPermissions(permissioins, CHECK_PERMISSION);
+                act.requestPermissions(permissioins, code);
                 return false;
             }
         }

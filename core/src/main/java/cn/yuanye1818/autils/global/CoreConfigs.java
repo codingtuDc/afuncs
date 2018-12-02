@@ -3,11 +3,11 @@ package cn.yuanye1818.autils.global;
 import cn.yuanye1818.autils.core.json.jsonholder.JsonHolder;
 import cn.yuanye1818.autils.core.net.RetrofitManager;
 
-public abstract class AutilsConfigs {
+public abstract class CoreConfigs {
 
-    public static AutilsConfigs CONFIGS;
+    public static CoreConfigs CONFIGS;
 
-    public static AutilsConfigs configs() {
+    public static CoreConfigs configs() {
         if (CONFIGS == null) {
             CONFIGS = App.APP.createConfigs();
         }

@@ -1,11 +1,7 @@
 package cn.yuanye1818.autils.compiler;
 
 import com.google.auto.service.AutoService;
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.TypeName;
-
-import org.omg.PortableServer.POA;
 
 import java.util.Set;
 
@@ -56,37 +52,13 @@ public class MakerForPermissonChecker extends CoreMaker {
         ME me = new ME(e);
         if (permissonChecker == null) {
             permissonChecker = new ClassBuilder(CLASS_PERMISSONCHECKER);
-
-            MethodBuilder check = new MethodBuilder("check");
-            check.privateMethod().staticMethod();
-            check.addParameter(heroClass, "hero").addParameter(TypeName.INT, "code")
-                 .addParameter(String[].class, "ps");
-            check.addCodeLine("$T act = hero.getAct();", activityClass);
-            check.addCodeLine("if (act != null) {");
-            check.addCodeLine("  if ($T.check(act, ps)) {", permissionUtilsClass);
-            check.addCodeLine("    hero.onPermissionsBack(code, ps, new int[ps.length]);");
-            check.addCodeLine("  }");
-            check.addCodeLine("}");
-            permissonChecker.addMethod(check);
-            //
-            MethodBuilder check1 = new MethodBuilder("check");
-            check1.privateMethod().staticMethod();
-            check1.addParameter(heroClass, "hero").addParameter(String.class, "name")
-                  .addParameter(TypeName.INT, "code").addParameter(String[].class, "ps");
-            check1.addCodeLine("if (!$T.getPermissionChecked(name)) {", preferencesClass);
-            check1.addCodeLine("  $T.putPermissionChecked(name);", preferencesClass);
-            check1.addCodeLine("  check(hero, code, ps);");
-            check1.addCodeLine("} else {");
-            check1.addCodeLine("  hero.onPermissionsBack(code, null, null);");
-            check1.addCodeLine("}");
-            permissonChecker.addMethod(check1);
-
-
         }
+
+        String paramName = "helper";
 
         final MethodBuilder check = new MethodBuilder("check" + Utils.nameFirstUpper(me.name()));
         check.publicMethod().staticMethod();
-        check.addParameter(heroClass, "hero");
+        check.addParameter(permissionHelperClass, paramName);
 
 
         PermissionCheck annotation = me.e().getAnnotation(PermissionCheck.class);
@@ -99,7 +71,7 @@ public class MakerForPermissonChecker extends CoreMaker {
                                                      .initializer("$L", position).build());
 
         if (annotation.isForce()) {
-            check.addCodeLine("check(hero, $N,", codeName);
+            check.addCodeLine("$T.check($N, $N,", permissionFuncClass, paramName, codeName);
         } else {
             String preferenceName = "CACHE_CHECK_" + Utils.getStaticName(me.name());
             permissonChecker.builder().addField(FieldSpec.builder(String.class, preferenceName,
@@ -110,7 +82,7 @@ public class MakerForPermissonChecker extends CoreMaker {
                                                                                                               me.name())
                                                                                                       .toLowerCase())
                                                          .build());
-            check.addCodeLine("check(hero, $N, $N,", preferenceName, codeName);
+            check.addCodeLine("$T.check($N, $N, $N,", permissionFuncClass, paramName, preferenceName, codeName);
         }
 
         check.addCode("   new String[]{");

@@ -8,7 +8,7 @@ import java.util.Set;
 import cn.yuanye1818.autils.core.bean.CoreBean;
 import cn.yuanye1818.autils.core.json.JsonFunc;
 
-public class Preferences {
+public class CorePreferences {
 
     public static SharedPreferences sf() {
         return PreferenceManager.getDefaultSharedPreferences(App.APP);

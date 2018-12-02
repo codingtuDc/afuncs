@@ -1,21 +1,28 @@
 package cn.yuanye1818.autils.core.activity;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.yuanye1818.autils.core.hero.Hero;
 import cn.yuanye1818.autils.core.hero.HeroFunc;
+import cn.yuanye1818.autils.core.hero.OnActivityBack;
+import cn.yuanye1818.autils.core.ls.Ls;
+import cn.yuanye1818.autils.core.permission.PermissionHelper;
 import cn.yuanye1818.autils.core.utils.ActFunc;
+import cn.yuanye1818.autils.core.utils.CollectionFunc;
 import cn.yuanye1818.autils.core.utils.ViewFunc;
 
-public class CoreActivity extends AppCompatActivity {
+public class CoreActivity extends AppCompatActivity implements ActivityFunc {
 
     protected Hero hero;
 
@@ -23,6 +30,8 @@ public class CoreActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         hero = HeroFunc.bind(getThis());
+        addPermissionHelper(hero);
+        addOnActivityBack(hero);
     }
 
     @Override
@@ -72,16 +81,73 @@ public class CoreActivity extends AppCompatActivity {
     protected void beforeFinish() {
     }
 
+    /**************************************************
+     *
+     *
+     *
+     **************************************************/
+
+    private List<PermissionHelper> permissionHelpers;
+
+    public void addPermissionHelper(PermissionHelper helper) {
+        if (permissionHelpers == null)
+            permissionHelpers = new ArrayList<PermissionHelper>();
+        permissionHelpers.add(helper);
+    }
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
             @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        hero.onPermissionsBack(requestCode, permissions, grantResults);
+        Ls.ls(permissionHelpers, (position, helper) -> {
+            helper.onPermissionsBack(requestCode, permissions, grantResults);
+            return false;
+        });
+    }
+
+    private List<OnActivityBack> onActivityBacks;
+
+    public void addOnActivityBack(OnActivityBack back) {
+        if (onActivityBacks == null)
+            onActivityBacks = new ArrayList<OnActivityBack>();
+        onActivityBacks.add(back);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Ls.ls(onActivityBacks, (position, back) -> {
+            back.onActivityResult(requestCode, resultCode, data);
+            return false;
+        });
+    }
+
+    /**************************************************
+     *
+     * onkeydown
+     *
+     **************************************************/
+
+    private List<WhenKeyDown> keyDowns;
+
+    public void addToKeyDowns(WhenKeyDown keyDown) {
+        if (keyDowns == null) {
+            keyDowns = new ArrayList<WhenKeyDown>();
+        }
+        keyDowns.add(keyDown);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        hero.onActivityResult(requestCode, resultCode, data);
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        boolean b = false;
+
+        for (int i = 0; i < CollectionFunc.count(keyDowns); i++) {
+            if (keyDowns.get(i).onKeyDown(keyCode, event)) {
+                b = true;
+            }
+        }
+
+        return b ? b : super.onKeyDown(keyCode, event);
     }
+
 }

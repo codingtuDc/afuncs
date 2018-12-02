@@ -1,13 +1,10 @@
 package cn.yuanye1818.autils.core.net;
 
-import android.text.TextUtils;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import cn.yuanye1818.autils.core.utils.StringFunc;
-import cn.yuanye1818.autils.global.App;
-import cn.yuanye1818.autils.global.AutilsConfigs;
+import cn.yuanye1818.autils.global.CoreConfigs;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -32,7 +29,7 @@ public class RetrofitManager {
         if (retrofit == null) {
 
             if (okHttpClientCreater == null) {
-                okHttpClientCreater = AutilsConfigs.configs().getDefaultOkHttpClientCreater();
+                okHttpClientCreater = CoreConfigs.configs().getDefaultOkHttpClientCreater();
             }
 
             OkHttpClient okHttpClient = null;
@@ -43,7 +40,7 @@ public class RetrofitManager {
             }
 
             if (retrofitCreater == null) {
-                retrofitCreater = AutilsConfigs.configs().getDefaultRetrofitCreater();
+                retrofitCreater = CoreConfigs.configs().getDefaultRetrofitCreater();
             }
 
             if (retrofitCreater == null) {
@@ -58,7 +55,7 @@ public class RetrofitManager {
 
     private static OkHttpClient createOkHttpClient() {
         return new OkHttpClient.Builder()
-                .addInterceptor(new BaseInterceptor(AutilsConfigs.configs().isLog())).build();
+                .addInterceptor(new BaseInterceptor(CoreConfigs.configs().isLog())).build();
     }
 
     private static Retrofit createRetrofit(OkHttpClient okHttpClient, String baseUrl) {
