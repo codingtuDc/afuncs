@@ -9,9 +9,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/autils_compiler" />
-            <option value="$PROJECT_DIR$/autils_compiler_annotation" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core_compiler" />
+            <option value="$PROJECT_DIR$/core_compiler_annotation" />
+            <option value="$PROJECT_DIR$/func4j" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

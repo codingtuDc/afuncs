@@ -5,9 +5,9 @@ import android.util.Log;
 import java.util.Collection;
 import java.util.Iterator;
 
-import cn.yuanye1818.autils.core.utils.CollectionFunc;
-import cn.yuanye1818.autils.core.utils.StringFunc;
 import cn.yuanye1818.autils.global.CoreConfigs;
+import cn.yuanye1818.func4j.CountFunc;
+import cn.yuanye1818.func4j.StringFunc;
 
 public class Logs {
 
@@ -23,7 +23,7 @@ public class Logs {
         sb.append(
                 "┌───────────────────────────────────────────────────────────────────────────────────────\n");
 
-        for (int i = 0; i < CollectionFunc.count(msgs); i++) {
+        for (int i = 0; i < CountFunc.count(msgs); i++) {
             sb.append("│ " + msgs[i] + "\n");
         }
         sb.append(

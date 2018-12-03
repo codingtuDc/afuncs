@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.yuanye1818.autils.core.log.Logs;
-import cn.yuanye1818.autils.core.utils.StringFunc;
 import cn.yuanye1818.autils.global.CoreConfigs;
+import cn.yuanye1818.func4j.StringFunc;
 
 /**
  * Created by cute on 2017/12/14.

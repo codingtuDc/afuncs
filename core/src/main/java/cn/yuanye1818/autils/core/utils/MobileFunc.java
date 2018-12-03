@@ -1,6 +1,8 @@
 package cn.yuanye1818.autils.core.utils;
 
+import android.content.Context;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 
 import java.lang.reflect.Field;
 
@@ -55,6 +57,7 @@ public class MobileFunc {
         return screenHight;
     }
 
+
     public static float getDensity() {
         if (density < 0) {
             density = getDisplayMetrics().density;
@@ -92,5 +95,10 @@ public class MobileFunc {
 
     public static int dpToPx(int dp) {
         return (int) (getDensity() * dp);
+    }
+
+    public static int dpToPx(Context context, int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                                               context.getResources().getDisplayMetrics());
     }
 }

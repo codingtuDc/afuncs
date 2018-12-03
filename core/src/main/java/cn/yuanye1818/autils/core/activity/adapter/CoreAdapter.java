@@ -1,6 +1,5 @@
 package cn.yuanye1818.autils.core.activity.adapter;
 
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import java.lang.reflect.Constructor;
 import cn.yuanye1818.autils.core.R;
 import cn.yuanye1818.autils.core.activity.viewholder.CoreViewHolder;
 import cn.yuanye1818.autils.core.log.Logs;
-import cn.yuanye1818.autils.core.utils.ClassFunc;
+import cn.yuanye1818.func4j.ClassFunc;
 
 public abstract class CoreAdapter<VH extends CoreViewHolder> extends RecyclerView.Adapter<VH> {
 

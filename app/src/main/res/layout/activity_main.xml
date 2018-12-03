@@ -4,9 +4,113 @@
     android:layout_height="match_parent">
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv"
+    <TextView
+        android:id="@+id/tv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="50dp"
+        android:background="#000000"
+        android:gravity="center"
+        android:text="xxx"
+        android:textColor="#fff"
+        android:textSize="18sp" />
+
+    <cn.yuanye1818.autils.core.view.layerview.BottomLayerView
+
+        android:id="@+id/bv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="xxx" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="xxx" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="xxx" />
+
+        </LinearLayout>
+
+    </cn.yuanye1818.autils.core.view.layerview.BottomLayerView>
+
+    <cn.yuanye1818.autils.core.view.layerview.CenterLayerView
+        android:id="@+id/dialogView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/titleTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_dialog_layer_title"
+                android:clickable="true"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingTop="35dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="35dp"
+                android:textColor="@color/colorAlmostBlack"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#ddd" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/leftTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_dialog_layer_left"
+                    android:gravity="center"
+                    android:textColor="@color/colorAlmostBlack"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/rightTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_dialog_layer_right"
+                    android:gravity="center"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </cn.yuanye1818.autils.core.view.layerview.CenterLayerView>
 
 </RelativeLayout>
+
+

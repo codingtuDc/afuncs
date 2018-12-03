@@ -16,11 +16,11 @@ import java.util.List;
 import cn.yuanye1818.autils.core.hero.Hero;
 import cn.yuanye1818.autils.core.hero.HeroFunc;
 import cn.yuanye1818.autils.core.hero.OnActivityBack;
-import cn.yuanye1818.autils.core.ls.Ls;
 import cn.yuanye1818.autils.core.permission.PermissionHelper;
 import cn.yuanye1818.autils.core.utils.ActFunc;
-import cn.yuanye1818.autils.core.utils.CollectionFunc;
 import cn.yuanye1818.autils.core.utils.ViewFunc;
+import cn.yuanye1818.func4j.CountFunc;
+import cn.yuanye1818.func4j.ls.Ls;
 
 public class CoreActivity extends AppCompatActivity implements ActivityFunc {
 
@@ -29,9 +29,6 @@ public class CoreActivity extends AppCompatActivity implements ActivityFunc {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        hero = HeroFunc.bind(getThis());
-        addPermissionHelper(hero);
-        addOnActivityBack(hero);
     }
 
     @Override
@@ -46,6 +43,9 @@ public class CoreActivity extends AppCompatActivity implements ActivityFunc {
                         rootView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                     }
                 });
+        hero = HeroFunc.bind(getThis());
+        addPermissionHelper(hero);
+        addOnActivityBack(hero);
     }
 
     protected void onViewInitComplete() {
@@ -141,7 +141,7 @@ public class CoreActivity extends AppCompatActivity implements ActivityFunc {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         boolean b = false;
 
-        for (int i = 0; i < CollectionFunc.count(keyDowns); i++) {
+        for (int i = 0; i < CountFunc.count(keyDowns); i++) {
             if (keyDowns.get(i).onKeyDown(keyCode, event)) {
                 b = true;
             }

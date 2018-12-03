@@ -9,7 +9,7 @@ import java.util.List;
 import cn.yuanye1818.autils.core.activity.adapter.CoreAdapter;
 import cn.yuanye1818.autils.core.activity.viewholder.CoreViewHolder;
 import cn.yuanye1818.autils.core.activity.viewholder.MoreViewHolder;
-import cn.yuanye1818.autils.core.utils.CollectionFunc;
+import cn.yuanye1818.func4j.CountFunc;
 
 public abstract class CoreMoreAdapter<VH extends CoreViewHolder, T>
         extends CoreAdapter<CoreViewHolder> {
@@ -56,7 +56,7 @@ public abstract class CoreMoreAdapter<VH extends CoreViewHolder, T>
     }
 
     public void updateItem(List<T> ts) {
-        updateItem(ts, CollectionFunc.count(ts) > 0);
+        updateItem(ts, CountFunc.count(ts) > 0);
     }
 
     public void updateItem(List<T> ts, boolean hasMore) {
@@ -66,7 +66,7 @@ public abstract class CoreMoreAdapter<VH extends CoreViewHolder, T>
         if (page == startPage()) {
             this.ts.clear();
         }
-        if (CollectionFunc.count(ts) > 0)
+        if (CountFunc.count(ts) > 0)
             this.ts.addAll(ts);
 
         notifyDataSetChanged();
@@ -75,7 +75,7 @@ public abstract class CoreMoreAdapter<VH extends CoreViewHolder, T>
 
     @Override
     public int getItemCount() {
-        return CollectionFunc.count(ts) + (hasMore ? 1 : 0);
+        return CountFunc.count(ts) + (hasMore ? 1 : 0);
     }
 
     public static interface OnLoadMore {

@@ -1,7 +1,6 @@
 package cn.yuanye1818.autils.core.utils;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,11 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import cn.yuanye1818.autils.core.log.Logs;
 import cn.yuanye1818.autils.global.App;
+import cn.yuanye1818.func4j.ClassFunc;
+import cn.yuanye1818.func4j.StringFunc;
 
 public class ViewFunc {
 

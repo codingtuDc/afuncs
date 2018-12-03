@@ -3,8 +3,8 @@ package cn.yuanye1818.autils.core.net;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.yuanye1818.autils.core.utils.StringFunc;
 import cn.yuanye1818.autils.global.CoreConfigs;
+import cn.yuanye1818.func4j.StringFunc;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;

@@ -2,11 +2,10 @@ package cn.yuanye1818.autils.test;
 
 import java.io.IOException;
 
-import cn.yuanye1818.autils.User;
 import cn.yuanye1818.autils.core.json.JsonFunc;
 import cn.yuanye1818.autils.core.log.Logs;
 import cn.yuanye1818.autils.core.net.NetBackI;
-import cn.yuanye1818.autils.core.utils.ClassFunc;
+import cn.yuanye1818.func4j.ClassFunc;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
