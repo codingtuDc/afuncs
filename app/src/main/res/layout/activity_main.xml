@@ -14,7 +14,7 @@
         android:textColor="#fff"
         android:textSize="18sp" />
 
-    <cn.yuanye1818.autils.core.view.layerview.BottomLayerView
+    <cn.yuanye1818.func4a.core.view.layerview.BottomLayerView
 
         android:id="@+id/bv"
         android:layout_width="match_parent"
@@ -44,9 +44,9 @@
 
         </LinearLayout>
 
-    </cn.yuanye1818.autils.core.view.layerview.BottomLayerView>
+    </cn.yuanye1818.func4a.core.view.layerview.BottomLayerView>
 
-    <cn.yuanye1818.autils.core.view.layerview.CenterLayerView
+    <cn.yuanye1818.func4a.core.view.layerview.CenterLayerView
         android:id="@+id/dialogView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -109,7 +109,7 @@
 
         </LinearLayout>
 
-    </cn.yuanye1818.autils.core.view.layerview.CenterLayerView>
+    </cn.yuanye1818.func4a.core.view.layerview.CenterLayerView>
 
 </RelativeLayout>
 

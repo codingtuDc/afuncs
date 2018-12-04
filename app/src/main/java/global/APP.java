@@ -1,7 +1,7 @@
 package global;
 
-import cn.yuanye1818.autils.global.App;
-import cn.yuanye1818.autils.global.CoreConfigs;
+import cn.yuanye1818.func4a.global.App;
+import cn.yuanye1818.func4a.global.CoreConfigs;
 
 public class APP extends App {
 

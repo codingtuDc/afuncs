@@ -1,8 +1,8 @@
 package global;
 
-import cn.yuanye1818.autils.core.json.jsonholder.JsonHolder;
-import cn.yuanye1818.autils.core.net.RetrofitManager;
-import cn.yuanye1818.autils.global.CoreConfigs;
+import cn.yuanye1818.func4a.core.json.jsonholder.JsonHolder;
+import cn.yuanye1818.func4a.core.net.RetrofitManager;
+import cn.yuanye1818.func4a.global.CoreConfigs;
 
 public class Configs extends CoreConfigs {
     @Override

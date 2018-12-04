@@ -1,12 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.github.dcendents.android-maven'
 
-group = 'cn.yuanye1818.autils.core'
-
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "cn.yuanye1818.autils"
+        applicationId "cn.yuanye1818.func4a"
         minSdkVersion 14
         targetSdkVersion 28
         versionCode 1

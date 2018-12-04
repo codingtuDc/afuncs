@@ -17,4 +17,21 @@ public class CountFunc {
         return objs == null ? 0 : objs.length;
     }
 
+    /**************************************************
+     *
+     * isNull
+     *
+     **************************************************/
+    public static boolean isNull(Collection cs) {
+        return count(cs) <= 0;
+    }
+
+    public static boolean isNull(Map map) {
+        return count(map) <= 0;
+    }
+
+    public static boolean isNull(Object... objs) {
+        return count(objs) <= 0;
+    }
+
 }
