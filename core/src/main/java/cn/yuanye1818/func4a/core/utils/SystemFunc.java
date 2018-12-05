@@ -1,5 +1,6 @@
 package cn.yuanye1818.func4a.core.utils;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.media.AudioManager;
 import android.view.WindowManager;
@@ -27,5 +28,9 @@ public class SystemFunc {
 
     public static AudioManager getAudioManager() {
         return (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
+    }
+
+    public static NotificationManager getNotificationManager() {
+        return (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
     }
 }

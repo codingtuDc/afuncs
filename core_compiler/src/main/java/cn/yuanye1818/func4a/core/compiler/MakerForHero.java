@@ -6,8 +6,6 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 
-import java.lang.annotation.AnnotationTypeMismatchException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -140,7 +138,7 @@ public class MakerForHero extends CoreMaker {
         //            binder.storyBack(data);
         //        }
         onActivityResult.addCodeLine("  if (resultCode == $T.RESULT_OK && requestCode == $T.$N) {",
-                                     activityClass, requestCodeClass, value1);
+                                     activityClass, code4RequestClass, value1);
         onActivityResult.addCodeLine("    binder.$N(data);", me.name());
         onActivityResult.addCodeLine("  }");
 

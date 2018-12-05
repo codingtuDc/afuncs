@@ -2,7 +2,6 @@ package cn.yuanye1818.func4a.core.compiler;
 
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.TypeName;
 
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
-import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 
 import cn.yuanye1818.func4a.core.compiler.annotation.activity.Launcher;
@@ -23,9 +21,7 @@ import cn.yuanye1818.func4a.core.compiler.builder.FieldBuilder;
 import cn.yuanye1818.func4a.core.compiler.builder.MethodBuilder;
 import cn.yuanye1818.func4a.core.compiler.element.CE;
 import cn.yuanye1818.func4a.core.compiler.utils.Utils;
-import cn.yuanye1818.func4j.CountFunc;
 import cn.yuanye1818.func4j.StringFunc;
-import cn.yuanye1818.func4j.ls.Ls;
 import cn.yuanye1818.func4j.ls.each.Each;
 
 import static cn.yuanye1818.func4j.ls.Ls.ls;
@@ -137,21 +133,23 @@ public class MakerForActLauncher extends CoreMaker {
 
 
                 if ("int".equals(s)) {
-
                     setPmb(pmb, TypeName.INT, "return data.getIntExtra($N, -1);", staticName);
-
                     mb.addParameter(TypeName.INT, paramName);
                     mb.addCodeLine("    intent.putExtra($T.$N, $N);", passClass, staticName,
                                    paramName);
                 } else if ("double".equals(s)) {
+                    setPmb(pmb, TypeName.DOUBLE, "return data.getDoubleExtra($N, -1);", staticName);
                     mb.addParameter(TypeName.DOUBLE, paramName);
                     mb.addCodeLine("    intent.putExtra($T.$N, $N);", passClass, staticName,
                                    paramName);
                 } else if ("long".equals(s)) {
+                    setPmb(pmb, TypeName.LONG, "return data.getLongExtra($N, -1);", staticName);
                     mb.addParameter(TypeName.LONG, paramName);
                     mb.addCodeLine("    intent.putExtra($T.$N, $N);", passClass, staticName,
                                    paramName);
                 } else if ("boolean".equals(s)) {
+                    setPmb(pmb, TypeName.BOOLEAN, "return data.getBooleanExtra($N, false);",
+                           staticName);
                     mb.addParameter(TypeName.BOOLEAN, paramName);
                     mb.addCodeLine("    intent.putExtra($T.$N, $N);", passClass, staticName,
                                    paramName);
@@ -164,11 +162,22 @@ public class MakerForActLauncher extends CoreMaker {
                     mb.addCodeLine("    intent.putExtra($T.$N, $N);", passClass, staticName,
                                    paramName);
                 } else if ("float".equals(s)) {
+
+                    setPmb(pmb, TypeName.FLOAT, "return data.getFloatExtra($N, -1f);",
+                           staticName);
+
                     mb.addParameter(TypeName.FLOAT, paramName);
                     mb.addCodeLine("    intent.putExtra($T.$N, $N);", passClass, staticName,
                                    paramName);
                 } else if ("short".equals(s)) {
+
                     mb.addParameter(TypeName.SHORT, paramName);
+                    mb.addCodeLine("    intent.putExtra($T.$N, $N);", passClass, staticName,
+                                   paramName);
+                } else if (String.class.getName().equals(s)) {
+                    setPmb(pmb, ClassName.bestGuess(String.class.getName()),
+                           "return data.getStringExtra($N);", staticName);
+                    mb.addParameter(String.class, paramName);
                     mb.addCodeLine("    intent.putExtra($T.$N, $N);", passClass, staticName,
                                    paramName);
                 } else {
@@ -194,7 +203,7 @@ public class MakerForActLauncher extends CoreMaker {
         if (StringFunc.isNotBlank(requestCodeName)) {
 
             if (requestCodeClassBuilder == null) {
-                requestCodeClassBuilder = new ClassBuilder(CLASS_REQUEST_CODE);
+                requestCodeClassBuilder = new ClassBuilder(CLASS_CODE_4_REQUEST);
             }
 
             FieldBuilder fb = new FieldBuilder(TypeName.INT, requestCodeName);
@@ -203,7 +212,7 @@ public class MakerForActLauncher extends CoreMaker {
 
             requestCodeClassBuilder.addField(fb);
             mb.addCodeLine("    $T.startActivityForResult(act, intent, $T.$N);", actFuncClass,
-                           requestCodeClass, requestCodeName);
+                           code4RequestClass, requestCodeName);
         } else {
             mb.addCodeLine("    $T.startActivity(act, intent);", actFuncClass);
         }

@@ -5,11 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import cn.yuanye1818.func4a.core.ActLuncher;
-import cn.yuanye1818.func4a.core.RequestCode;
 import cn.yuanye1818.func4a.core.activity.CoreActivity;
 import cn.yuanye1818.func4a.core.compiler.annotation.activity.Launcher;
 import cn.yuanye1818.func4a.core.compiler.annotation.onactivityresult.OnResult;
-import global.RequestCodeName;
+import global.Name4RequestCode;
 
 
 @Launcher
@@ -23,7 +22,7 @@ public class OneActivity extends CoreActivity {
 
     }
 
-    @OnResult(RequestCodeName.TWO)
+    @OnResult(Name4RequestCode.TWO)
     public void twoBack(Intent data) {
 
     }

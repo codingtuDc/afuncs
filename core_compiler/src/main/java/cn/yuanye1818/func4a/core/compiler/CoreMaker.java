@@ -81,8 +81,8 @@ public abstract class CoreMaker extends AbstractProcessor {
     public static final String CLASS_JSON_FUNC = PACKAGE_BASE + ".core.json.JsonFunc";
     public static final ClassName jsonFuncClass = ClassName.bestGuess(CLASS_JSON_FUNC);
     //RequestCode
-    public static final String CLASS_REQUEST_CODE = PACKAGE_BASE + ".core.RequestCode";
-    public static final ClassName requestCodeClass = ClassName.bestGuess(CLASS_REQUEST_CODE);
+    public static final String CLASS_CODE_4_REQUEST = PACKAGE_BASE + ".core.Code4Request";
+    public static final ClassName code4RequestClass = ClassName.bestGuess(CLASS_CODE_4_REQUEST);
     //API
     public static final String CLASS_API = PACKAGE_BASE + ".core.net.API";
     //Api
@@ -97,7 +97,6 @@ public abstract class CoreMaker extends AbstractProcessor {
     public static final String CLASS_NET_UTILS = PACKAGE_BASE + ".core.net.NetUtils";
     //ActLuncher
     public static final String CLASS_ACT_LUNCHER = PACKAGE_BASE + ".core.ActLuncher";
-
 
 
     /**************************************************

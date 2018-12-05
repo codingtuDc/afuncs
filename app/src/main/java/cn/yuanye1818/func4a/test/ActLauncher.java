@@ -8,7 +8,7 @@ import cn.yuanye1818.func4a.User;
 import cn.yuanye1818.func4a.core.json.JsonFunc;
 import cn.yuanye1818.func4a.core.utils.ActFunc;
 import global.Pass;
-import global.RequestCode;
+import global.Code4Request;
 
 public class ActLauncher {
 
@@ -17,7 +17,7 @@ public class ActLauncher {
     }
 
     public static final void mainAct1(Activity act) {
-        ActFunc.startActivityForResult(act, MainActivity.class, RequestCode.STORY);
+        ActFunc.startActivityForResult(act, MainActivity.class, Code4Request.STORY);
     }
 
     public static final void mainAct2(Activity act, User user) {
@@ -30,7 +30,7 @@ public class ActLauncher {
         Intent intent = new Intent(act, MainActivity.class);
         intent.putExtra(Pass.USER, JsonFunc.toJson(user));
         intent.putExtra(Pass.CODE, code);
-        ActFunc.startActivityForResult(act, intent, RequestCode.STORY);
+        ActFunc.startActivityForResult(act, intent, Code4Request.STORY);
     }
 
 }
