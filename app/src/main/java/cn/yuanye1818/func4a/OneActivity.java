@@ -22,7 +22,7 @@ public class OneActivity extends CoreActivity {
 
     }
 
-    @OnResult(Name4RequestCode.TWO)
+    @OnResult(TwoActivity.class)
     public void twoBack(Intent data) {
 
     }

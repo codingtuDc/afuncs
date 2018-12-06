@@ -14,16 +14,15 @@ import cn.yuanye1818.func4a.core.net.BaseInterceptor;
 import cn.yuanye1818.func4a.core.net.Net;
 import cn.yuanye1818.func4a.core.view.layerview.BottomLayerView;
 import cn.yuanye1818.func4a.global.CoreConfigs;
-import global.Name4RequestCode;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-@Launcher(requestCode = Name4RequestCode.STORY, paramClasses = {User.class,
+@Launcher(paramClasses = {User.class,
         long.class,
         String.class,
         float.class}, paramNames = {"user", "code", "name", "price"})
-public class MainActivity extends CoreActivity {
+public class MainActivity extends CoreActivity{
 
     @FindView(R.id.bv)
     BottomLayerView bottomView;
@@ -33,6 +32,7 @@ public class MainActivity extends CoreActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Net.getAlbumDetail("2005").main(hero);
+
     }
 
     @NetBack

@@ -14,9 +14,7 @@ import javax.lang.model.type.MirroredTypesException;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Types;
 
-import cn.yuanye1818.func4a.core.compiler.annotation.activity.Launcher;
 import cn.yuanye1818.func4a.core.compiler.annotation.net.BackType;
-import cn.yuanye1818.func4a.core.compiler.annotation.net.NetBack;
 import cn.yuanye1818.func4a.core.compiler.builder.ClassBuilder;
 import cn.yuanye1818.func4a.core.compiler.builder.MethodBuilder;
 import cn.yuanye1818.func4a.core.compiler.element.CE;
@@ -48,36 +46,42 @@ public class Utils {
         return cs.get(cs.indexOf(new ClassBuilder(className)));
     }
 
-    public static String getNetBack(NetBack netBack) {
+    public static String getAnnotationClass(AnnotationClassGetter getter, Class defaultClass) {
         String back = null;
         try {
-            back = netBack.value().getName();
+            back = (String) getter.get();
         } catch (MirroredTypeException mte) {
             TypeMirror classTypeMirror = mte.getTypeMirror();
             TypeElement classTypeElement = (TypeElement) typeUtils.asElement(classTypeMirror);
             back = classTypeElement.getQualifiedName().toString();
         }
-        if (Void.class.getName().equals(back)) {
+        if (defaultClass != null && defaultClass.getName().equals(back)) {
             back = null;
         }
         return back;
     }
 
-    public static void getLauncherParams(Launcher launcher, Each<String> each) {
+    public static String getAnnotationClass(AnnotationClassGetter getter) {
+        return getAnnotationClass(getter, null);
+    }
+
+
+    public static interface AnnotationClassGetter {
+        Object get();
+    }
+
+    public static void getAnnotationClasses(AnnotationClassGetter getter, Each<String> each) {
         try {
-            launcher.paramClasses();
+            getter.get();
         } catch (MirroredTypesException mte) {
             List<? extends TypeMirror> typeMirrors = mte.getTypeMirrors();
 
             Ls.ls(typeMirrors, (position, typeMirror) -> {
                 each.each(position, typeMirror.toString());
-                //                TypeElement classTypeElement = (TypeElement) typeUtils.asElement(typeMirror);
-                //                each.each(position, classTypeElement.getQualifiedName().toString());
                 return false;
             });
         }
     }
-
 
     public static void setTypeUtils(Types typeUtils) {
         Utils.typeUtils = typeUtils;

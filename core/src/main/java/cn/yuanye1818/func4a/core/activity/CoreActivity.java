@@ -44,8 +44,10 @@ public class CoreActivity extends AppCompatActivity implements ActivityFunc {
                     }
                 });
         hero = HeroFunc.bind(getThis());
-        addPermissionHelper(hero);
-        addOnActivityBack(hero);
+        if (hero != null) {
+            addPermissionHelper(hero);
+            addOnActivityBack(hero);
+        }
     }
 
     protected void onViewInitComplete() {

@@ -2,6 +2,7 @@ package cn.yuanye1818.func4a.core.compiler;
 
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 
 import cn.yuanye1818.func4a.core.compiler.annotation.activity.Launcher;
@@ -58,10 +60,6 @@ public class MakerForActLauncher extends CoreMaker {
             Utils.build(passClassBuilder);
         Utils.build(classBuilder);
 
-        List<FieldBuilder> fieldBuilders = passClassBuilder.getFieldBuilders();
-
-        //        Utils.throwE(sb.toString());
-
         return true;
     }
 
@@ -75,30 +73,8 @@ public class MakerForActLauncher extends CoreMaker {
         String methodName = simpleName.substring(0, 1).toLowerCase() + simpleName.substring(1);
         MethodBuilder mb = new MethodBuilder(methodName);
 
-        //        public static final void mainAct(Activity act) {
-        //            ActFunc.startActivity(act, MainActivity.class);
-        //        }
-        //
-        //        public static final void mainAct1(Activity act) {
-        //            ActFunc.startActivityForResult(act, MainActivity.class, RequestCode.STORY);
-        //        }
-        //
-        //        public static final void mainAct2(Activity act, User user) {
-        //            Intent intent = new Intent(act, MainActivity.class);
-        //            intent.putExtra(Pass.USER, JsonFunc.toJson(user));
-        //            ActFunc.startActivity(act, intent);
-        //        }
-        //
-        //        public static final void mainAct3(Activity act, User user) {
-        //            Intent intent = new Intent(act, MainActivity.class);
-        //            intent.putExtra(Pass.USER, JsonFunc.toJson(user));
-        //            ActFunc.startActivityForResult(act, intent, RequestCode.STORY);
-        //        }
-
         mb.publicMethod().staticMethod().finalMethod();
         mb.addParameter(activityClass, "act");
-
-        //@Launcher(requestCode = "STORY", paramClasses = {User.class})
 
         Launcher annotation = ce.getAnnotation(Launcher.class);
 
@@ -106,7 +82,7 @@ public class MakerForActLauncher extends CoreMaker {
                        ce.className());
 
 
-        Utils.getLauncherParams(annotation, new Each<String>() {
+        Utils.getAnnotationClasses(() -> annotation.paramClasses(), new Each<String>() {
             @Override
             public boolean each(int position, String s) {
                 String paramName = annotation.paramNames()[position];
@@ -128,28 +104,31 @@ public class MakerForActLauncher extends CoreMaker {
                     passParams.add(paramName);
                     pmb = new MethodBuilder(paramName);
                     pmb.publicMethod().staticMethod().finalMethod();
-                    pmb.addParameter(intentClass, "data");
+                    pmb.addParameter(intentClass,"data");
                 }
 
 
                 if ("int".equals(s)) {
-                    setPmb(pmb, TypeName.INT, "return data.getIntExtra($N, -1);", staticName);
+                    setPmb(pmb, TypeName.INT, "return data.getIntExtra($T.$N, -1);", passClass,
+                           staticName);
                     mb.addParameter(TypeName.INT, paramName);
                     mb.addCodeLine("    intent.putExtra($T.$N, $N);", passClass, staticName,
                                    paramName);
                 } else if ("double".equals(s)) {
-                    setPmb(pmb, TypeName.DOUBLE, "return data.getDoubleExtra($N, -1);", staticName);
+                    setPmb(pmb, TypeName.DOUBLE, "return data.getDoubleExtra($T.$N, -1);",
+                           passClass, staticName);
                     mb.addParameter(TypeName.DOUBLE, paramName);
                     mb.addCodeLine("    intent.putExtra($T.$N, $N);", passClass, staticName,
                                    paramName);
                 } else if ("long".equals(s)) {
-                    setPmb(pmb, TypeName.LONG, "return data.getLongExtra($N, -1);", staticName);
+                    setPmb(pmb, TypeName.LONG, "return data.getLongExtra($T.$N, -1);", passClass,
+                           staticName);
                     mb.addParameter(TypeName.LONG, paramName);
                     mb.addCodeLine("    intent.putExtra($T.$N, $N);", passClass, staticName,
                                    paramName);
                 } else if ("boolean".equals(s)) {
-                    setPmb(pmb, TypeName.BOOLEAN, "return data.getBooleanExtra($N, false);",
-                           staticName);
+                    setPmb(pmb, TypeName.BOOLEAN, "return data.getBooleanExtra($T.$N, false);",
+                           passClass, staticName);
                     mb.addParameter(TypeName.BOOLEAN, paramName);
                     mb.addCodeLine("    intent.putExtra($T.$N, $N);", passClass, staticName,
                                    paramName);
@@ -163,7 +142,7 @@ public class MakerForActLauncher extends CoreMaker {
                                    paramName);
                 } else if ("float".equals(s)) {
 
-                    setPmb(pmb, TypeName.FLOAT, "return data.getFloatExtra($N, -1f);",
+                    setPmb(pmb, TypeName.FLOAT, "return data.getFloatExtra($T.$N, -1f);", passClass,
                            staticName);
 
                     mb.addParameter(TypeName.FLOAT, paramName);
@@ -176,14 +155,15 @@ public class MakerForActLauncher extends CoreMaker {
                                    paramName);
                 } else if (String.class.getName().equals(s)) {
                     setPmb(pmb, ClassName.bestGuess(String.class.getName()),
-                           "return data.getStringExtra($N);", staticName);
+                           "return data.getStringExtra($T.$N);", passClass, staticName);
                     mb.addParameter(String.class, paramName);
                     mb.addCodeLine("    intent.putExtra($T.$N, $N);", passClass, staticName,
                                    paramName);
                 } else {
                     ClassName className = ClassName.bestGuess(s);
-                    setPmb(pmb, className, "return $T.toBean($T.class, data.getStringExtra($N));",
-                           jsonFuncClass, className, staticName);
+                    setPmb(pmb, className,
+                           "return $T.toBean($T.class, data.getStringExtra($T.$N));", jsonFuncClass,
+                           className, passClass, staticName);
                     mb.addParameter(className, paramName);
                     mb.addCodeLine("    intent.putExtra($T.$N, $T.toJson($N));", passClass,
                                    staticName, jsonFuncClass, paramName);
@@ -198,24 +178,19 @@ public class MakerForActLauncher extends CoreMaker {
             }
         });
 
-        String requestCodeName = annotation.requestCode();
 
-        if (StringFunc.isNotBlank(requestCodeName)) {
-
-            if (requestCodeClassBuilder == null) {
-                requestCodeClassBuilder = new ClassBuilder(CLASS_CODE_4_REQUEST);
-            }
-
-            FieldBuilder fb = new FieldBuilder(TypeName.INT, requestCodeName);
-            fb.publicField().staticField().finalField();
-            fb.initializer("$L", REQUEST_CODE++);
-
-            requestCodeClassBuilder.addField(fb);
-            mb.addCodeLine("    $T.startActivityForResult(act, intent, $T.$N);", actFuncClass,
-                           code4RequestClass, requestCodeName);
-        } else {
-            mb.addCodeLine("    $T.startActivity(act, intent);", actFuncClass);
+        String requestCodeName = StringFunc.getStaticName(simpleName);
+        if (requestCodeClassBuilder == null) {
+            requestCodeClassBuilder = new ClassBuilder(CLASS_CODE_4_REQUEST);
         }
+
+        FieldBuilder fb = new FieldBuilder(TypeName.INT, requestCodeName);
+        fb.publicField().staticField().finalField();
+        fb.initializer("$L", REQUEST_CODE++);
+
+        requestCodeClassBuilder.addField(fb);
+        mb.addCodeLine("    $T.startActivityForResult(act, intent, $T.$N);", actFuncClass,
+                       code4RequestClass, requestCodeName);
 
 
         classBuilder.addMethod(mb);
@@ -225,7 +200,6 @@ public class MakerForActLauncher extends CoreMaker {
     private void setPmb(MethodBuilder pmb, TypeName className, String format, Object... args) {
         if (pmb == null)
             return;
-
         pmb.returns(className);
         pmb.addCodeLine(format, args);
     }

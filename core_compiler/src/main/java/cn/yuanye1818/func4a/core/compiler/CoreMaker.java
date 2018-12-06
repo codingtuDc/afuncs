@@ -78,6 +78,9 @@ public abstract class CoreMaker extends AbstractProcessor {
     public static final String CLASS_PASS = PACKAGE_BASE + ".core.Pass";
     public static final ClassName passClass = ClassName.bestGuess(CLASS_PASS);
     //Pass
+    public static final String CLASS_INTENTS = PACKAGE_BASE + ".core.Intents";
+    public static final ClassName intentsClass = ClassName.bestGuess(CLASS_INTENTS);
+    //Pass
     public static final String CLASS_JSON_FUNC = PACKAGE_BASE + ".core.json.JsonFunc";
     public static final ClassName jsonFuncClass = ClassName.bestGuess(CLASS_JSON_FUNC);
     //RequestCode

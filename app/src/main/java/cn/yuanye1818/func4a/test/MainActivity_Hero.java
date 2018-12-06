@@ -48,4 +48,5 @@ public class MainActivity_Hero implements Hero {
     public void onPermissionsBack(int requestCode, String[] permissions, int[] grantResults) {
 
     }
+
 }

@@ -1,5 +1,6 @@
 package global;
 
+import cn.yuanye1818.func4a.R;
 import cn.yuanye1818.func4a.core.json.jsonholder.JsonHolder;
 import cn.yuanye1818.func4a.core.net.RetrofitManager;
 import cn.yuanye1818.func4a.global.CoreConfigs;
@@ -37,5 +38,10 @@ public class Configs extends CoreConfigs {
     @Override
     public RetrofitManager.RetrofitCreater getDefaultRetrofitCreater() {
         return null;
+    }
+
+    @Override
+    public int getDefaultIcon() {
+        return R.mipmap.ic_launcher;
     }
 }

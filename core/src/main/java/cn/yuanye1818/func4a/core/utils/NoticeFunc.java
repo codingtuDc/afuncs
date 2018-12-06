@@ -12,6 +12,7 @@ import cn.yuanye1818.func4a.global.CoreConfigs;
 public class NoticeFunc {
 
     public static void send(String title, String content, Intent intent) {
+
         NotificationManager notificationManager = SystemFunc.getNotificationManager();
         //获取PendingIntent
         PendingIntent mainPendingIntent = PendingIntent

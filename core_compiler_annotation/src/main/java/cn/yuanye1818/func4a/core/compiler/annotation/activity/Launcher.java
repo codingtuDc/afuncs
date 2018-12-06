@@ -6,8 +6,6 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.SOURCE)
 public @interface Launcher {
 
-    String requestCode() default "";
-
     Class[] paramClasses() default {};
 
     String[] paramNames() default {};

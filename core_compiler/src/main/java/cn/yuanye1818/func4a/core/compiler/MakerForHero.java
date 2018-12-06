@@ -130,15 +130,16 @@ public class MakerForHero extends CoreMaker {
 
         OnResult annotation = me.e().getAnnotation(OnResult.class);
 
+        String onResult = Utils.getAnnotationClass(new Utils.AnnotationClassGetter() {
+            @Override
+            public String get() {
+                return annotation.value().getName();
+            }
+        });
 
-        String value1 = annotation.value();
-
-
-        //if (resultCode == Activity.RESULT_OK && requestCode == RequestCode.STORY) {
-        //            binder.storyBack(data);
-        //        }
         onActivityResult.addCodeLine("  if (resultCode == $T.RESULT_OK && requestCode == $T.$N) {",
-                                     activityClass, code4RequestClass, value1);
+                                     activityClass, code4RequestClass, StringFunc.getStaticName(
+                        ClassName.bestGuess(onResult).simpleName()));
         onActivityResult.addCodeLine("    binder.$N(data);", me.name());
         onActivityResult.addCodeLine("  }");
 
@@ -218,7 +219,9 @@ public class MakerForHero extends CoreMaker {
 
         final List<? extends VariableElement> params = me.e().getParameters();
 
-        String netBackHandler = Utils.getNetBack(netBack);
+        String netBackHandler = Utils
+                .getAnnotationClass(() -> netBack.value().getName(), Void.class);
+
 
         if (Utils.isTextEmpty(netBackHandler)) {
             accept.builder()
