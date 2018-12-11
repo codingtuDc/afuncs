@@ -1,17 +1,17 @@
-package cn.yuanye1818.func4j.ls;
+package cn.yuanye1818.func4a.func4j.ls;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-import cn.yuanye1818.func4j.ls.each.Each;
-import cn.yuanye1818.func4j.ls.each.FilterEach;
-import cn.yuanye1818.func4j.ls.each.MapEach;
-import cn.yuanye1818.func4j.ls.each.MapFilterEach;
-import cn.yuanye1818.func4j.ls.filter.Filter;
-import cn.yuanye1818.func4j.ls.filter.MapFilter;
+import cn.yuanye1818.func4a.func4j.ls.each.Each;
+import cn.yuanye1818.func4a.func4j.ls.each.FilterEach;
+import cn.yuanye1818.func4a.func4j.ls.each.MapEach;
+import cn.yuanye1818.func4a.func4j.ls.each.MapFilterEach;
+import cn.yuanye1818.func4a.func4j.ls.filter.Filter;
+import cn.yuanye1818.func4a.func4j.ls.filter.MapFilter;
 
-import static cn.yuanye1818.func4j.CountFunc.count;
+import static cn.yuanye1818.func4a.func4j.CountFunc.count;
 
 public class Ls {
 

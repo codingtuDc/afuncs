@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cn.yuanye1818.func4a.global.CoreConfigs;
-import cn.yuanye1818.func4j.StringFunc;
+import cn.yuanye1818.func4a.func4j.StringFunc;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;

@@ -6,8 +6,8 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import cn.yuanye1818.func4a.global.CoreConfigs;
-import cn.yuanye1818.func4j.CountFunc;
-import cn.yuanye1818.func4j.StringFunc;
+import cn.yuanye1818.func4a.func4j.CountFunc;
+import cn.yuanye1818.func4a.func4j.StringFunc;
 
 public class Logs {
 

@@ -19,8 +19,8 @@ import cn.yuanye1818.func4a.core.hero.OnActivityBack;
 import cn.yuanye1818.func4a.core.permission.PermissionHelper;
 import cn.yuanye1818.func4a.core.utils.ActFunc;
 import cn.yuanye1818.func4a.core.utils.ViewFunc;
-import cn.yuanye1818.func4j.CountFunc;
-import cn.yuanye1818.func4j.ls.Ls;
+import cn.yuanye1818.func4a.func4j.CountFunc;
+import cn.yuanye1818.func4a.func4j.ls.Ls;
 
 public class CoreActivity extends AppCompatActivity implements ActivityFunc {
 

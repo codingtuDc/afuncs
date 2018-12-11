@@ -28,9 +28,9 @@ import javax.lang.model.type.TypeMirror;
 
 import cn.yuanye1818.func4a.core.compiler.annotation.net.Api;
 import cn.yuanye1818.func4a.core.compiler.annotation.net.BaseUrl;
-import cn.yuanye1818.func4j.StringFunc;
+import cn.yuanye1818.func4a.func4j.StringFunc;
 
-import static cn.yuanye1818.func4j.CountFunc.isNull;
+import static cn.yuanye1818.func4a.func4j.CountFunc.isNull;
 
 @AutoService(Processor.class)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)

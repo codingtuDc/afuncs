@@ -33,11 +33,11 @@ import cn.yuanye1818.func4a.core.compiler.element.CE;
 import cn.yuanye1818.func4a.core.compiler.element.ME;
 import cn.yuanye1818.func4a.core.compiler.element.PE;
 import cn.yuanye1818.func4a.core.compiler.utils.Utils;
-import cn.yuanye1818.func4j.CountFunc;
-import cn.yuanye1818.func4j.StringFunc;
-import cn.yuanye1818.func4j.ls.each.Each;
+import cn.yuanye1818.func4a.func4j.CountFunc;
+import cn.yuanye1818.func4a.func4j.StringFunc;
+import cn.yuanye1818.func4a.func4j.ls.each.Each;
 
-import static cn.yuanye1818.func4j.ls.Ls.ls;
+import static cn.yuanye1818.func4a.func4j.ls.Ls.ls;
 
 @AutoService(Processor.class)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)

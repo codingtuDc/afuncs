@@ -13,8 +13,8 @@ import android.widget.TextView;
 
 import cn.yuanye1818.func4a.core.log.Logs;
 import cn.yuanye1818.func4a.global.App;
-import cn.yuanye1818.func4j.ClassFunc;
-import cn.yuanye1818.func4j.StringFunc;
+import cn.yuanye1818.func4a.func4j.ClassFunc;
+import cn.yuanye1818.func4a.func4j.StringFunc;
 
 public class ViewFunc {
 

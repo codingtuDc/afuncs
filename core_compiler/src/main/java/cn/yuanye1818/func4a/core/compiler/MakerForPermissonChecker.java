@@ -20,10 +20,10 @@ import cn.yuanye1818.func4a.core.compiler.builder.ClassBuilder;
 import cn.yuanye1818.func4a.core.compiler.builder.MethodBuilder;
 import cn.yuanye1818.func4a.core.compiler.element.ME;
 import cn.yuanye1818.func4a.core.compiler.utils.Utils;
-import cn.yuanye1818.func4j.StringFunc;
-import cn.yuanye1818.func4j.ls.each.Each;
+import cn.yuanye1818.func4a.func4j.StringFunc;
+import cn.yuanye1818.func4a.func4j.ls.each.Each;
 
-import static cn.yuanye1818.func4j.ls.Ls.ls;
+import static cn.yuanye1818.func4a.func4j.ls.Ls.ls;
 
 @AutoService(Processor.class)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)

@@ -1,9 +1,7 @@
 package cn.yuanye1818.func4a.core.compiler.builder;
 
 import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
 import java.util.ArrayList;
@@ -11,10 +9,10 @@ import java.util.List;
 
 import javax.lang.model.element.Modifier;
 
-import cn.yuanye1818.func4j.ls.Ls;
-import cn.yuanye1818.func4j.ls.each.Each;
+import cn.yuanye1818.func4a.func4j.ls.Ls;
+import cn.yuanye1818.func4a.func4j.ls.each.Each;
 
-import static cn.yuanye1818.func4j.ls.Ls.ls;
+import static cn.yuanye1818.func4a.func4j.ls.Ls.ls;
 
 public class ClassBuilder {
     private ClassName className;

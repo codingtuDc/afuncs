@@ -9,7 +9,7 @@ import java.lang.reflect.Constructor;
 import cn.yuanye1818.func4a.core.R;
 import cn.yuanye1818.func4a.core.activity.viewholder.CoreViewHolder;
 import cn.yuanye1818.func4a.core.log.Logs;
-import cn.yuanye1818.func4j.ClassFunc;
+import cn.yuanye1818.func4a.func4j.ClassFunc;
 
 public abstract class CoreAdapter<VH extends CoreViewHolder> extends RecyclerView.Adapter<VH> {
 

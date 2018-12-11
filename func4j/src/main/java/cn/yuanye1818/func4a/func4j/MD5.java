@@ -1,4 +1,4 @@
-package cn.yuanye1818.func4j;
+package cn.yuanye1818.func4a.func4j;
 
 import java.security.MessageDigest;
 

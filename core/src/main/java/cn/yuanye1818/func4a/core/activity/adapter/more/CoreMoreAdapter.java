@@ -9,7 +9,7 @@ import java.util.List;
 import cn.yuanye1818.func4a.core.activity.adapter.CoreAdapter;
 import cn.yuanye1818.func4a.core.activity.viewholder.CoreViewHolder;
 import cn.yuanye1818.func4a.core.activity.viewholder.MoreViewHolder;
-import cn.yuanye1818.func4j.CountFunc;
+import cn.yuanye1818.func4a.func4j.CountFunc;
 
 public abstract class CoreMoreAdapter<VH extends CoreViewHolder, T>
         extends CoreAdapter<CoreViewHolder> {

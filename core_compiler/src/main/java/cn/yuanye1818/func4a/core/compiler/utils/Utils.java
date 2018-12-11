@@ -19,10 +19,10 @@ import cn.yuanye1818.func4a.core.compiler.builder.ClassBuilder;
 import cn.yuanye1818.func4a.core.compiler.builder.MethodBuilder;
 import cn.yuanye1818.func4a.core.compiler.element.CE;
 import cn.yuanye1818.func4a.core.compiler.element.PE;
-import cn.yuanye1818.func4j.ls.Ls;
-import cn.yuanye1818.func4j.ls.each.Each;
+import cn.yuanye1818.func4a.func4j.ls.Ls;
+import cn.yuanye1818.func4a.func4j.ls.each.Each;
 
-import static cn.yuanye1818.func4j.ls.Ls.ls;
+import static cn.yuanye1818.func4a.func4j.ls.Ls.ls;
 
 public class Utils {
 

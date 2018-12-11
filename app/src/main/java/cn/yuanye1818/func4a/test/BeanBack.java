@@ -5,7 +5,7 @@ import java.io.IOException;
 import cn.yuanye1818.func4a.core.json.JsonFunc;
 import cn.yuanye1818.func4a.core.log.Logs;
 import cn.yuanye1818.func4a.core.net.NetBackI;
-import cn.yuanye1818.func4j.ClassFunc;
+import cn.yuanye1818.func4a.func4j.ClassFunc;
 import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava2.Result;
 
