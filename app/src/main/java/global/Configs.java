@@ -1,6 +1,7 @@
 package global;
 
-import cn.yuanye1818.func4a.R;
+import com.bbk.appstore.R;
+
 import cn.yuanye1818.func4a.core.json.jsonholder.JsonHolder;
 import cn.yuanye1818.func4a.core.net.RetrofitManager;
 import cn.yuanye1818.func4a.global.CoreConfigs;

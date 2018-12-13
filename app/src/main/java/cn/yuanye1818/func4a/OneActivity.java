@@ -17,9 +17,7 @@ public class OneActivity extends CoreActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         ActLuncher.twoActivity(getThis());
-
     }
 
     @OnResult(TwoActivity.class)

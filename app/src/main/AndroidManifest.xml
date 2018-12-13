@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.yuanye1818.func4a">
+    package="com.bbk.appstore">
 
     <application
         android:name="global.APP"
