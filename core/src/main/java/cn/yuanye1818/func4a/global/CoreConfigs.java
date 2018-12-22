@@ -31,4 +31,6 @@ public abstract class CoreConfigs {
     public abstract RetrofitManager.RetrofitCreater getDefaultRetrofitCreater();
 
     public abstract int getDefaultIcon();
+
+    public abstract String getPicDirName();
 }

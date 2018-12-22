@@ -8,7 +8,6 @@ import cn.yuanye1818.func4a.core.ActLuncher;
 import cn.yuanye1818.func4a.core.activity.CoreActivity;
 import cn.yuanye1818.func4a.core.compiler.annotation.activity.Launcher;
 import cn.yuanye1818.func4a.core.compiler.annotation.onactivityresult.OnResult;
-import global.Name4RequestCode;
 
 
 @Launcher

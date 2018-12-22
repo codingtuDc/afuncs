@@ -22,6 +22,7 @@ import cn.yuanye1818.func4a.core.permission.PermissionFunc;
 import cn.yuanye1818.func4a.core.permission.PermissionHelper;
 import cn.yuanye1818.func4a.core.utils.ToastFunc;
 import cn.yuanye1818.func4a.global.App;
+import cn.yuanye1818.func4a.global.CoreConfigs;
 import cn.yuanye1818.func4a.global.CoreRequestCode;
 
 public final class ImageGetter implements PermissionHelper, OnActivityBack {
@@ -94,7 +95,7 @@ public final class ImageGetter implements PermissionHelper, OnActivityBack {
     private void getPicByCamera() {
         try {
             File dir = new File(
-                    Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + App.APP
+                    Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + CoreConfigs.configs()
                             .getPicDirName());
             if (!dir.exists()) {
                 dir.mkdirs();

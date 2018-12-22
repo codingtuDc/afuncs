@@ -45,4 +45,9 @@ public class Configs extends CoreConfigs {
     public int getDefaultIcon() {
         return R.mipmap.ic_launcher;
     }
+
+    @Override
+    public String getPicDirName() {
+        return "AUtils";
+    }
 }

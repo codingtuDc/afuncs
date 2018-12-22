@@ -31,5 +31,4 @@ public abstract class App extends Application implements Thread.UncaughtExceptio
 
     public abstract CoreConfigs createConfigs();
 
-    public abstract String getPicDirName();
 }
