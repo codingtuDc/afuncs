@@ -92,6 +92,12 @@ public abstract class CoreMaker extends AbstractProcessor {
     public static final String CLASS_ANNOTATION_API = PACKAGE_BASE + ".core.compiler.annotation.net.Api";
     //ClickView
     public static final String CLASS_CLICK_VIEW = PACKAGE_BASE + ".core.compiler.annotation.onclick.ClickView";
+    //ClickView
+    public static final String CLASS_NET_BACK = PACKAGE_BASE + ".core.compiler.annotation.net.NetBack";
+    //FindView
+    public static final String CLASS_FIND_VIEW = PACKAGE_BASE + ".core.compiler.annotation.view.FindView";
+    //OnResult
+    public static final String CLASS_ON_RESULT = PACKAGE_BASE + ".core.compiler.annotation.onactivityresult.OnResult";
     //PermissionCheck
     public static final String CLASS_PERMISSION_CHECK = PACKAGE_BASE + ".core.compiler.annotation.permission.PermissionCheck";
     //PermissionCheck

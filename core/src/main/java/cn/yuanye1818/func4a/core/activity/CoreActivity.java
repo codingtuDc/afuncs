@@ -18,6 +18,7 @@ import cn.yuanye1818.func4a.core.hero.HeroFunc;
 import cn.yuanye1818.func4a.core.hero.OnActivityBack;
 import cn.yuanye1818.func4a.core.permission.PermissionHelper;
 import cn.yuanye1818.func4a.core.utils.ActFunc;
+import cn.yuanye1818.func4a.core.utils.StatusBarFunc;
 import cn.yuanye1818.func4a.core.utils.ViewFunc;
 import cn.yuanye1818.func4a.func4j.CountFunc;
 import cn.yuanye1818.func4a.func4j.ls.Ls;
@@ -29,6 +30,11 @@ public class CoreActivity extends AppCompatActivity implements ActivityFunc {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initStatusBar();
+    }
+
+    protected void initStatusBar() {
+        StatusBarFunc.translucentAndLight(getThis());
     }
 
     @Override
@@ -100,7 +106,7 @@ public class CoreActivity extends AppCompatActivity implements ActivityFunc {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-            @NonNull int[] grantResults) {
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         Ls.ls(permissionHelpers, (position, helper) -> {
             helper.onPermissionsBack(requestCode, permissions, grantResults);

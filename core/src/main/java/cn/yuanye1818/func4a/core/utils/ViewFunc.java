@@ -5,6 +5,7 @@ import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputFilter;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -84,6 +85,12 @@ public class ViewFunc {
      * 设置Textview
      *
      ****************************************************************/
+
+    public static void setTextSize(View tv, int size) {
+        if (tv != null && tv instanceof TextView) {
+            ((TextView) tv).setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        }
+    }
 
     public static void setText(View tv, Object text) {
         if (tv != null && tv instanceof TextView) {
@@ -235,7 +242,7 @@ public class ViewFunc {
         ViewGroup.LayoutParams p = child.getLayoutParams();
         if (p == null) {
             p = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                                           ViewGroup.LayoutParams.WRAP_CONTENT);
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
         }
 
         int childWidthSpec = ViewGroup.getChildMeasureSpec(0, 0 + 0, p.width);

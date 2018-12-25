@@ -2,6 +2,7 @@ package cn.yuanye1818.func4a.core.utils;
 
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -32,5 +33,9 @@ public class SystemFunc {
 
     public static NotificationManager getNotificationManager() {
         return (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+    }
+
+    public static PackageManager getPackageManager() {
+        return getContext().getPackageManager();
     }
 }

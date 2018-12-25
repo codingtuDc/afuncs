@@ -41,7 +41,9 @@ import static cn.yuanye1818.func4a.func4j.ls.Ls.ls;
 
 @AutoService(Processor.class)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
-@SupportedAnnotationTypes({CoreMaker.CLASS_CLICK_VIEW})
+@SupportedAnnotationTypes({CoreMaker.CLASS_CLICK_VIEW, CoreMaker.CLASS_NET_BACK, CoreMaker.CLASS_FIND_VIEW,
+        CoreMaker.CLASS_PERMISSION_CHECK,
+        CoreMaker.CLASS_ON_RESULT})
 public class MakerForHero extends CoreMaker {
 
     public static final String METHOD_SET_ON_CLICK = "setOnClick";
@@ -138,7 +140,7 @@ public class MakerForHero extends CoreMaker {
         });
 
         onActivityResult.addCodeLine("  if (resultCode == $T.RESULT_OK && requestCode == $T.$N) {",
-                                     activityClass, code4RequestClass, StringFunc.getStaticName(
+                activityClass, code4RequestClass, StringFunc.getStaticName(
                         ClassName.bestGuess(onResult).simpleName()));
         onActivityResult.addCodeLine("    binder.$N(data);", me.name());
         onActivityResult.addCodeLine("  }");
@@ -161,7 +163,7 @@ public class MakerForHero extends CoreMaker {
         if (annotation.isForce()) {
             onPermissionBack
                     .addCodeLine("  if (requestCode == $T.CHECK_$N) {", permissionCheckerClass,
-                                 StringFunc.getStaticName(me.name()));
+                            StringFunc.getStaticName(me.name()));
             onPermissionBack.addCodeLine("    if ($T.allow(grantResults)) {", permissionFuncClass);
             onPermissionBack.addCodeLine("      binder.$N();", me.name());
             onPermissionBack.addCodeLine("    } else {");
@@ -171,7 +173,7 @@ public class MakerForHero extends CoreMaker {
         } else {
             onPermissionBack
                     .addCodeLine("  if (requestCode == $T.CHECK_$N) {", permissionCheckerClass,
-                                 StringFunc.getStaticName(me.name()));
+                            StringFunc.getStaticName(me.name()));
             onPermissionBack.addCodeLine("    try {");
             onPermissionBack.addCodeLine("      binder.$N();", me.name());
             onPermissionBack.addCodeLine("    } catch (Exception e) {");
@@ -225,8 +227,8 @@ public class MakerForHero extends CoreMaker {
 
         if (Utils.isTextEmpty(netBackHandler)) {
             accept.builder()
-                  .addCode("if ($S.equals(code)) {\n  this.$N.$N(", me.name(), BINDER_NAME,
-                           me.name());
+                    .addCode("if ($S.equals(code)) {\n  this.$N.$N(", me.name(), BINDER_NAME,
+                            me.name());
             ls(params, new Each<VariableElement>() {
                 @Override
                 public boolean each(int position, VariableElement e) {
@@ -287,7 +289,7 @@ public class MakerForHero extends CoreMaker {
             public boolean each(int position, Integer id) {
 
                 heroClass.constructorBuilder()
-                         .addCode(METHOD_SET_ON_CLICK + "($N," + id + ");\n", VIEW_NAME);
+                        .addCode(METHOD_SET_ON_CLICK + "($N," + id + ");\n", VIEW_NAME);
 
                 List<? extends VariableElement> parameters = me.e().getParameters();
 
@@ -319,12 +321,12 @@ public class MakerForHero extends CoreMaker {
 
                                 if (annotation == null) {
                                     onClick.builder().addCode("($T) v.getTag(R.id.tag_obj)",
-                                                              ClassName.bestGuess(typeName));
+                                            ClassName.bestGuess(typeName));
                                 } else {
 
                                     onClick.builder().addCode("($T) v.getTag($L)",
-                                                              ClassName.bestGuess(typeName),
-                                                              annotation.value());
+                                            ClassName.bestGuess(typeName),
+                                            annotation.value());
                                 }
                             }
 
@@ -337,7 +339,7 @@ public class MakerForHero extends CoreMaker {
                     onClick.builder().addCode("}\n");
                 } else {
                     onClick.builder().addCode("if (id == $L) {\n  $N.$N();\n}\n", id, BINDER_NAME,
-                                              me.e().getSimpleName());
+                            me.e().getSimpleName());
                 }
                 return false;
             }
@@ -354,7 +356,7 @@ public class MakerForHero extends CoreMaker {
 
             ClassBuilder heroClass = new ClassBuilder(heroName);
             heroClass.builder().addField(ce.className(), BINDER_NAME, Modifier.PRIVATE)
-                     .addSuperinterface(MakerForHero.heroClass);
+                    .addSuperinterface(MakerForHero.heroClass);
             /**************************************************
              *
              * 构造函数
@@ -372,7 +374,7 @@ public class MakerForHero extends CoreMaker {
              **************************************************/
             MethodBuilder onClick = new MethodBuilder(METHOD_ON_CLICK);
             onClick.builder().addAnnotation(Override.class).addModifiers(Modifier.PUBLIC)
-                   .addParameter(viewClass, "v").addStatement("int id = v.getId()");
+                    .addParameter(viewClass, "v").addStatement("int id = v.getId()");
             heroClass.addMethod(onClick);
             /**************************************************
              *
@@ -381,9 +383,9 @@ public class MakerForHero extends CoreMaker {
              **************************************************/
             MethodBuilder accept = new MethodBuilder(METHOD_ACCEPT);
             accept.builder().addAnnotation(Override.class).addModifiers(Modifier.PUBLIC)
-                  .addParameter(String.class, "code")
-                  .addParameter(ParameterizedTypeName.get(resultClass, responseBodyClass),
-                                "result");
+                    .addParameter(String.class, "code")
+                    .addParameter(ParameterizedTypeName.get(resultClass, responseBodyClass),
+                            "result");
             heroClass.addMethod(accept);
             /**************************************************
              *
