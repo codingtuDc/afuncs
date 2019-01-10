@@ -39,11 +39,13 @@ public class MainActivity extends CoreActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         ////jvq=1.0.9
 
-        String param = "ZXhSxy_3xXhFZ2hDtkCqKMkmqD6uxyrfc0hHUyuF6M4CTe-0W9E1WeE2c0WD65hYc0uI6M4PTNdfR9-1TeQ2cyPnUyh2xlJFh2hDc0uwxH1nx5kgxXhsxv6ec94fJX8SZl_1cykgU0hzcv6H6519LR_1tMTYTv6H65UD65kgTz6nUe4DTD6CtM-CTN-fTNKDWy-46MKDT9KCTeQl65T9Z2EDZ0TlT0ZCJX8nUyWjRlWCcN4PJ2rYtMZYTv6fxyr4656wc2C56RJ9L5gYtMQ2ZR8fRl6ucXWSx0mgTMcfWv6fxyr4KR8Vh2hDM2rF6MCYU5PsJX8sZR_3L0h1Rl6uce42L5CuLM4mWeHlW9TfTec4T9dPTed2xXKgh4uyqq6fxyr4KR8Vh2hDtMQ2Z5J46RW4tMQ2x5gH65fgk2hHx5HVkaJwJXTgTzklK9TPTed4WN-4ONQ2LX6PRl_1cykgTQ";
-
-        Net.newApps(param, "1.0.9").main(hero);
+//        String param = "ZXhSxy_3xXhFZ2hDtkCqKMkmqD6uxyrfc0hHUyuF6M4CTe-0W9E1WeE2c0WD65hYc0uI6M4PTNdfR9-1TeQ2cyPnUyh2xlJFh2hDc0uwxH1nx5kgxXhsxv6ec94fJX8SZl_1cykgU0hzcv6H6519LR_1tMTYTv6H65UD65kgTz6nUe4DTD6CtM-CTN-fTNKDWy-46MKDT9KCTeQl65T9Z2EDZ0TlT0ZCJX8nUyWjRlWCcN4PJ2rYtMZYTv6fxyr4656wc2C56RJ9L5gYtMQ2ZR8fRl6ucXWSx0mgTMcfWv6fxyr4KR8Vh2hDM2rF6MCYU5PsJX8sZR_3L0h1Rl6uce42L5CuLM4mWeHlW9TfTec4T9dPTed2xXKgh4uyqq6fxyr4KR8Vh2hDtMQ2Z5J46RW4tMQ2x5gH65fgk2hHx5HVkaJwJXTgTzklK9TPTed4WN-4ONQ2LX6PRl_1cykgTQ";
+//
+//        Net.newApps(param, "1.0.9").main(hero);
 
     }
 

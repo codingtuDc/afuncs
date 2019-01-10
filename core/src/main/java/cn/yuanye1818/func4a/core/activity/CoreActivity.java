@@ -18,6 +18,7 @@ import cn.yuanye1818.func4a.core.hero.HeroFunc;
 import cn.yuanye1818.func4a.core.hero.OnActivityBack;
 import cn.yuanye1818.func4a.core.permission.PermissionHelper;
 import cn.yuanye1818.func4a.core.utils.ActFunc;
+import cn.yuanye1818.func4a.core.utils.AdjustFunc;
 import cn.yuanye1818.func4a.core.utils.StatusBarFunc;
 import cn.yuanye1818.func4a.core.utils.ViewFunc;
 import cn.yuanye1818.func4a.func4j.CountFunc;
@@ -30,6 +31,7 @@ public class CoreActivity extends AppCompatActivity implements ActivityFunc {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AdjustFunc.setCustomDensity(getThis());
         initStatusBar();
     }
 
