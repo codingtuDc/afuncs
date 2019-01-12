@@ -94,11 +94,7 @@ public class MobileFunc {
     }
 
     public static int dpToPx(int dp) {
-        return (int) (getDensity() * dp);
-    }
-
-    public static int dpToPx(Context context, int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                                               context.getResources().getDisplayMetrics());
+                                               App.APP.getResources().getDisplayMetrics());
     }
 }

@@ -6,4 +6,8 @@ public class MathFunc {
         return before * rateAfter / rateBefore;
     }
 
+    public static int row(int count, int perRow) {
+        return (count / perRow) + (count % perRow == 0 ? 0 : 1);
+    }
+
 }

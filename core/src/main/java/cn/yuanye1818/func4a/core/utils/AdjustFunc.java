@@ -6,6 +6,7 @@ import android.content.ComponentCallbacks;
 import android.content.res.Configuration;
 import android.util.DisplayMetrics;
 
+import cn.yuanye1818.func4a.core.bean.WH;
 import cn.yuanye1818.func4a.global.App;
 
 public class AdjustFunc {
@@ -47,6 +48,15 @@ public class AdjustFunc {
         activityDisplayMetrics.scaledDensity = targetScaledDensity;
         activityDisplayMetrics.densityDpi = targetDensityDpi;
 
+    }
+
+    public static WH inBox(int boxW, int boxH, int objW, int objH) {
+        if (boxW * objH > boxH * objW) {
+            boxW = boxH * objW / objH;
+        } else if (boxW * objH < boxH * objW) {
+            boxH = boxW * objH / objW;
+        }
+        return new WH(boxW, boxH);
     }
 
 

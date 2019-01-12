@@ -40,11 +40,11 @@ public class CenterLayerView extends LayerView {
         super.init(context, attrs, defStyleAttr);
 
         showScaleAnim = new ScaleAnimation(0.0f, 1f, 0.0f, 1f, Animation.RELATIVE_TO_SELF, 0.5f,
-                                           Animation.RELATIVE_TO_SELF, 0.5f);
+                Animation.RELATIVE_TO_SELF, 0.5f);
         showScaleAnim.setDuration(defaultDuration);
 
         hiddenScaleAnim = new ScaleAnimation(1f, 0f, 1f, 0f, Animation.RELATIVE_TO_SELF, 0.5f,
-                                             Animation.RELATIVE_TO_SELF, 0.5f);
+                Animation.RELATIVE_TO_SELF, 0.5f);
         hiddenScaleAnim.setDuration(defaultDuration);
 
     }
@@ -105,7 +105,7 @@ public class CenterLayerView extends LayerView {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (dialogView == null)
             dialogView = getChildAt(1);
-        int dp296 = MobileFunc.dpToPx(getContext(), 296);
+        int dp296 = MobileFunc.dpToPx(296);
         int w = getMeasuredWidth() * 2 / 3;
         ViewFunc.setW(dialogView, w > dp296 ? dp296 : w);
 

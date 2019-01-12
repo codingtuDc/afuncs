@@ -28,7 +28,7 @@ import static cn.yuanye1818.func4a.func4j.ls.Ls.ls;
 @AutoService(Processor.class)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @SupportedAnnotationTypes({CoreMaker.CLASS_PERMISSION_CHECK})
-public class MakerForPermissonChecker extends CoreMaker {
+public class MakerForCheckePermisson extends CoreMaker {
 
     ClassBuilder permissonChecker = null;
 
@@ -44,7 +44,6 @@ public class MakerForPermissonChecker extends CoreMaker {
                 return false;
             }
         });
-
         Utils.build(permissonChecker);
 
         return true;
@@ -69,23 +68,23 @@ public class MakerForPermissonChecker extends CoreMaker {
         String codeName = "CHECK_" + StringFunc.getStaticName(me.name());
 
         permissonChecker.builder().addField(FieldSpec.builder(int.class, codeName, Modifier.PUBLIC,
-                                                              Modifier.STATIC, Modifier.FINAL)
-                                                     .initializer("$L", position).build());
+                Modifier.STATIC, Modifier.FINAL)
+                .initializer("$L", position).build());
 
         if (annotation.isForce()) {
             check.addCodeLine("$T.check($N, $N,", permissionFuncClass, paramName, codeName);
         } else {
             String preferenceName = "CACHE_CHECK_" + StringFunc.getStaticName(me.name());
             permissonChecker.builder().addField(FieldSpec.builder(String.class, preferenceName,
-                                                                  Modifier.PUBLIC, Modifier.STATIC,
-                                                                  Modifier.FINAL).initializer("$S",
-                                                                                              "permission_check_" + StringFunc
-                                                                                                      .getStaticName(
-                                                                                                              me.name())
-                                                                                                      .toLowerCase())
-                                                         .build());
+                    Modifier.PUBLIC, Modifier.STATIC,
+                    Modifier.FINAL).initializer("$S",
+                    "permission_check_" + StringFunc
+                            .getStaticName(
+                                    me.name())
+                            .toLowerCase())
+                    .build());
             check.addCodeLine("$T.check($N, $N, $N,", permissionFuncClass, paramName,
-                              preferenceName, codeName);
+                    preferenceName, codeName);
         }
 
         check.addCode("   new String[]{");
@@ -107,7 +106,6 @@ public class MakerForPermissonChecker extends CoreMaker {
         check.addCodeLine("});");
 
         permissonChecker.addMethod(check);
-
 
     }
 

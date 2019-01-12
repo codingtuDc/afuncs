@@ -5,6 +5,11 @@ import java.util.Map;
 
 public class CountFunc {
 
+    /**************************************************
+     *
+     * count
+     *
+     **************************************************/
     public static int count(Collection cs) {
         return cs == null ? 0 : cs.size();
     }
