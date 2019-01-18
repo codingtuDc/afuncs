@@ -3,6 +3,7 @@ package cn.yuanye1818.func4a.core.utils;
 import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentCallbacks;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.util.DisplayMetrics;
 
@@ -14,7 +15,7 @@ public class AdjustFunc {
     private static float sNoncompatDensity;
     private static float sNoncompatScaledDensity;
 
-    public static void setCustomDensity(Activity activity) {
+    public static void setCustomDensity(Context context) {
         DisplayMetrics appDisplayMetrics = App.APP.getResources().getDisplayMetrics();
 
         if (sNoncompatDensity == 0) {
@@ -35,7 +36,7 @@ public class AdjustFunc {
             });
         }
 
-        float targetDensity = appDisplayMetrics.widthPixels / 360;
+        float targetDensity = ((float) appDisplayMetrics.widthPixels) / 360f;
         float targetScaledDensity = targetDensity * (sNoncompatScaledDensity / sNoncompatDensity);
         int targetDensityDpi = (int) (160 * targetDensity);
 
@@ -43,7 +44,7 @@ public class AdjustFunc {
         appDisplayMetrics.scaledDensity = targetScaledDensity;
         appDisplayMetrics.densityDpi = targetDensityDpi;
 
-        DisplayMetrics activityDisplayMetrics = activity.getResources().getDisplayMetrics();
+        DisplayMetrics activityDisplayMetrics = context.getResources().getDisplayMetrics();
         activityDisplayMetrics.density = targetDensity;
         activityDisplayMetrics.scaledDensity = targetScaledDensity;
         activityDisplayMetrics.densityDpi = targetDensityDpi;

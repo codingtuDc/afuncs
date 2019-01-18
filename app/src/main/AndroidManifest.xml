@@ -17,6 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="cn.yuanye1818.func4a.OneActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 

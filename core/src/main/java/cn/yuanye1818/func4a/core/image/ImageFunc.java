@@ -26,4 +26,9 @@ public class ImageFunc {
         Glide.with(App.APP).load(url).into(iv);
     }
 
+    public static void setAssetsImage(ImageView iv, String url) {
+        url = "file:///android_asset/" + url;
+        setImage(iv, url);
+    }
+
 }

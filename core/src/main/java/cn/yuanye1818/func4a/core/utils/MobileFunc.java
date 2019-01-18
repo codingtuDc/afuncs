@@ -34,7 +34,7 @@ public class MobileFunc {
      *
      ****************************************************************/
 
-    private static float density = -1;
+//    private static float density = -1;
 
     /****************************************************************
      *
@@ -58,12 +58,12 @@ public class MobileFunc {
     }
 
 
-    public static float getDensity() {
-        if (density < 0) {
-            density = getDisplayMetrics().density;
-        }
-        return density;
-    }
+//    public static float getDensity() {
+//        if (density < 0) {
+//            density = getDisplayMetrics().density;
+//        }
+//        return density;
+//    }
 
     public static DisplayMetrics getDisplayMetrics() {
         DisplayMetrics metric = new DisplayMetrics();

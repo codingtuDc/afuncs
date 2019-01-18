@@ -2,12 +2,14 @@ package cn.yuanye1818.func4a;
 
 import android.Manifest;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.bbk.appstore.R;
 
 import java.io.IOException;
 
+import cn.yuanye1818.func4a.core.ActLuncher;
 import cn.yuanye1818.func4a.core.activity.BaseTipActivity;
 import cn.yuanye1818.func4a.core.activity.CoreActivity;
 import cn.yuanye1818.func4a.core.bean.WH;
@@ -19,6 +21,7 @@ import cn.yuanye1818.func4a.core.compiler.annotation.view.FindView;
 import cn.yuanye1818.func4a.core.log.Logs;
 import cn.yuanye1818.func4a.core.net.BaseInterceptor;
 import cn.yuanye1818.func4a.core.net.Net;
+import cn.yuanye1818.func4a.core.utils.MobileFunc;
 import cn.yuanye1818.func4a.core.utils.ToastFunc;
 import cn.yuanye1818.func4a.core.view.layerview.BottomLayerView;
 import cn.yuanye1818.func4a.global.CoreConfigs;
@@ -29,9 +32,15 @@ import retrofit2.Response;
 
 public class MainActivity extends BaseTipActivity {
 
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     protected void onStartBtClick(View v) {
-        ToastFunc.toast("onStartBtClick");
+        ActLuncher.oneActivity(getThis());
     }
 
     @Override
