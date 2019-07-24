@@ -9,6 +9,14 @@
 在模块的**build.gradle**中添加依赖
 
 ```groovy
+android {
+    ...
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+    ...
+}
 dependencies {
     ...
     implementation 'com.github.yuanye1818.afuncs:core:1.0.9'
@@ -26,13 +34,40 @@ dependencies {
 
 ```
 
-（三）创建配置文件
+（三）创建配置类
 
-创建**Configs**，继承自**CoreConfigs**
+创建**Configs.java**，继承自**cn.yuanye1818.func4a.global.CoreConfigs**
 
 ```java
 public class Configs extends CoreConfigs {
    ...
 }
+```
+
+（四）创建Application类
+
+创建**APP.java**，继承自**cn.yuanye1818.func4a.global.App**，在*createConfigs*方法中返回*Configs*对象
+
+```java
+public class APP extends App {
+    @Override
+    public CoreConfigs createConfigs() {
+        return new Configs();
+    }
+}
+```
+
+（五）配置AndroidManifest
+
+在**AndroidManifest.xml**中添加配置
+
+```xml
+<application
+        ...
+        android:name="global.APP"
+        ...
+        android:theme="@style/AppTheme.Main">
+        
+</application>
 ```
 
