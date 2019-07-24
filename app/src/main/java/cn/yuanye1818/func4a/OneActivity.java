@@ -13,6 +13,8 @@ import cn.yuanye1818.func4a.core.compiler.annotation.activity.Launcher;
 import cn.yuanye1818.func4a.core.compiler.annotation.onactivityresult.OnResult;
 import cn.yuanye1818.func4a.core.compiler.annotation.view.FindView;
 import cn.yuanye1818.func4a.core.image.ImageFunc;
+import cn.yuanye1818.func4a.core.net.API;
+import cn.yuanye1818.func4a.core.net.Net;
 
 
 @Launcher
