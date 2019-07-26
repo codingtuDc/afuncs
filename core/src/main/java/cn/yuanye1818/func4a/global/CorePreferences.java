@@ -10,7 +10,7 @@ import cn.yuanye1818.func4a.core.json.JsonFunc;
 
 public class CorePreferences {
 
-    public static SharedPreferences sf() {
+    public static SharedPreferences sp() {
         return PreferenceManager.getDefaultSharedPreferences(App.APP);
     }
 
@@ -20,32 +20,32 @@ public class CorePreferences {
      *
      **************************************************/
 
-    private static void putString(String key, String value) {
-        sf().edit().putString(key, value).commit();
+    public static void putString(String key, String value) {
+        sp().edit().putString(key, value).commit();
     }
 
-    private static void putInt(String key, int value) {
-        sf().edit().putInt(key, value).commit();
+    public static void putInt(String key, int value) {
+        sp().edit().putInt(key, value).commit();
     }
 
-    private static void putBoolean(String key, boolean value) {
-        sf().edit().putBoolean(key, value).commit();
+    public static void putBoolean(String key, boolean value) {
+        sp().edit().putBoolean(key, value).commit();
     }
 
-    private static void putFloat(String key, float value) {
-        sf().edit().putFloat(key, value).commit();
+    public static void putFloat(String key, float value) {
+        sp().edit().putFloat(key, value).commit();
     }
 
-    private static void putLong(String key, long value) {
-        sf().edit().putLong(key, value).commit();
+    public static void putLong(String key, long value) {
+        sp().edit().putLong(key, value).commit();
     }
 
-    private static void putStringSet(String key, Set<String> values) {
-        sf().edit().putStringSet(key, values).commit();
+    public static void putStringSet(String key, Set<String> values) {
+        sp().edit().putStringSet(key, values).commit();
     }
 
-    private static void putBean(String key, CoreBean value) {
-        sf().edit().putString(key, value.toString()).commit();
+    public static void putBean(String key, CoreBean value) {
+        sp().edit().putString(key, value.toString()).commit();
     }
 
     /**************************************************
@@ -55,27 +55,27 @@ public class CorePreferences {
      **************************************************/
 
     public static String getString(String key) {
-        return sf().getString(key, null);
+        return sp().getString(key, null);
     }
 
     public static int getInt(String key) {
-        return sf().getInt(key, 0);
+        return sp().getInt(key, 0);
     }
 
     public static float getFloat(String key) {
-        return sf().getFloat(key, 0f);
+        return sp().getFloat(key, 0f);
     }
 
     public static boolean getBoolean(String key) {
-        return sf().getBoolean(key, false);
+        return sp().getBoolean(key, false);
     }
 
     public static long getLong(String key) {
-        return sf().getLong(key, 0);
+        return sp().getLong(key, 0);
     }
 
     public static Set<String> getStringSet(String key) {
-        return sf().getStringSet(key, null);
+        return sp().getStringSet(key, null);
     }
 
     public static <T> T getT(Class<T> tClass, String key) {

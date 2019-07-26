@@ -11,6 +11,8 @@ import cn.yuanye1818.func4a.core.ActLuncher;
 import cn.yuanye1818.func4a.core.activity.CoreActivity;
 import cn.yuanye1818.func4a.core.compiler.annotation.activity.Launcher;
 import cn.yuanye1818.func4a.core.compiler.annotation.onactivityresult.OnResult;
+import cn.yuanye1818.func4a.core.compiler.annotation.onclick.ClickTag;
+import cn.yuanye1818.func4a.core.compiler.annotation.onclick.ClickView;
 import cn.yuanye1818.func4a.core.compiler.annotation.view.FindView;
 import cn.yuanye1818.func4a.core.image.ImageFunc;
 import cn.yuanye1818.func4a.core.net.API;
@@ -24,6 +26,12 @@ public class OneActivity extends CoreActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_one);
+    }
+
+    @ClickView(R.id.avatarIv)
+    public void xxxx(@ClickTag(R.id.avatarIv) Age osition){
+
+
     }
 
 }

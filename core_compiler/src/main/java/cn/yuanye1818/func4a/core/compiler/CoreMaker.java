@@ -23,6 +23,9 @@ public abstract class CoreMaker extends AbstractProcessor {
      *
      **************************************************/
     //Activity
+    public static final String CLASS_R = PACKAGE_BASE + ".core.R";
+    public static final ClassName rClass = bestGuess(CLASS_R);
+    //Activity
     public static final String CLASS_FRAGMENT = "android.support.v4.app.Fragment";
     public static final ClassName fragmentClass = bestGuess(CLASS_FRAGMENT);
     //Activity

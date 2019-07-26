@@ -315,15 +315,14 @@ public class MakerForHero extends CoreMaker {
                             if (CLASS_VIEW.equals(typeName)) {
                                 onClick.builder().addCode("v");
                             } else if ("int".equals(typeName)) {
-                                onClick.builder().addCode("(int) v.getTag(R.id.tag_position)");
+                                onClick.builder().addCode("(int) v.getTag($T.id.tag_position)", rClass);
                             } else {
                                 ClickTag annotation = pe.e().getAnnotation(ClickTag.class);
 
                                 if (annotation == null) {
-                                    onClick.builder().addCode("($T) v.getTag(R.id.tag_obj)",
-                                            ClassName.bestGuess(typeName));
+                                    onClick.builder().addCode("($T) v.getTag($T.id.tag_obj)",
+                                            ClassName.bestGuess(typeName), rClass);
                                 } else {
-
                                     onClick.builder().addCode("($T) v.getTag($L)",
                                             ClassName.bestGuess(typeName),
                                             annotation.value());

@@ -2,6 +2,7 @@ package cn.yuanye1818.func4a.global;
 
 import android.app.Application;
 
+import cn.yuanye1818.func4a.core.R;
 import cn.yuanye1818.func4a.core.log.Logs;
 
 /*************************************************
