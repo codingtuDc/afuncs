@@ -67,7 +67,11 @@ public class CorePreferences {
     }
 
     public static boolean getBoolean(String key) {
-        return sp().getBoolean(key, false);
+        return getBoolean(key, false);
+    }
+
+    public static boolean getBoolean(String key, boolean defValue) {
+        return sp().getBoolean(key, defValue);
     }
 
     public static long getLong(String key) {
