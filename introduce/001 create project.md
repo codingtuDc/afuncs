@@ -6,6 +6,29 @@
 
 （二）添加依赖
 
+在项目的**build.gradle**中添加依赖库
+
+```
+buildscript {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+        ...
+    }
+    ...
+}
+
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+        ...
+    }
+}
+```
+
+
+
 在模块的**build.gradle**中添加依赖
 
 ```groovy
